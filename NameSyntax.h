@@ -12,7 +12,7 @@ public:
 	NameSyntax();								// конструктор класса
 	NameSyntax(std::string text);				// конструктор с текстом файла
 
-	void Prog() override;		// аксиома S -> SE | SX | S D |eps
+    int* Prog() override;		// аксиома S -> SE | SX | S D |eps
 
 	void E();					// E - > { S }
 	void D();					// D -> t* id K;

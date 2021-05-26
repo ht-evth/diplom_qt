@@ -22,7 +22,7 @@ BlockSyntax::BlockSyntax(std::string text)
 }
 
 // синтаксический анализатор
-void BlockSyntax::Prog()
+int* BlockSyntax::Prog()
 {
 	std::string* lex = new std::string();
 
@@ -36,7 +36,7 @@ void BlockSyntax::Prog()
 			scaner->SetUk(uk1);
 	}
 	else
-		return;
+        return nullptr;
 	
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
@@ -48,7 +48,7 @@ void BlockSyntax::Prog()
 		if (type_lex != TYPE_CLOSED_BRACE)
 				scaner->SetUk(uk1);
 		else
-			return;
+            return nullptr;;
 
 		// SE
 		if (type_lex == TYPE_OPENED_BRACE)
@@ -76,7 +76,7 @@ void BlockSyntax::Prog()
 
 	}
 
-	this->root->CalculateMetrics();
+    return this->root->CalculateMetrics();
 
 }
 

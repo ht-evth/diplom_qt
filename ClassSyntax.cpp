@@ -24,7 +24,7 @@ ClassSyntax::ClassSyntax(std::string text)
 
 
 // синтаксический анализатор
-void ClassSyntax::Prog()
+int* ClassSyntax::Prog()
 {
 	BaseMetricsTree* save_cur = root->Cur;
 
@@ -36,7 +36,7 @@ void ClassSyntax::Prog()
 	if (type_lex != TYPE_CLOSED_BRACE)
 		scaner->SetUk(uk1);
 	else
-		return;
+        return nullptr;
 
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
@@ -46,7 +46,7 @@ void ClassSyntax::Prog()
 		if (type_lex != TYPE_CLOSED_BRACE)
 			scaner->SetUk(uk1);
 		else
-			return;
+            return nullptr;
 
 		
 		// объявление класса начинается начинается с ключевого слова class, но перед ним может быть ряд ключевых слов (public, static, ...)
@@ -80,9 +80,9 @@ void ClassSyntax::Prog()
 
 	}	
 
-	std::cout << "\n\n ВЫХОД ИЗ prog (CLASS)\n\n";
+    //std::cout << "\n\n ВЫХОД ИЗ prog (CLASS)\n\n";
 
-	root->CalculateMetrics();
+    return root->CalculateMetrics();
 
 
 

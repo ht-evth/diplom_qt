@@ -20,6 +20,8 @@ private slots:
 
     void on_Button_Open_File_2_clicked();
 
+    void on_Button_Start_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

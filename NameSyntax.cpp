@@ -25,7 +25,7 @@ NameSyntax::NameSyntax(std::string text)
 
 
 // синтаксический анализатор
-void NameSyntax::Prog()
+int* NameSyntax::Prog()
 {
 	std::string* lex = new std::string();
 
@@ -35,7 +35,7 @@ void NameSyntax::Prog()
 	if (type_lex != TYPE_CLOSED_BRACE)
 		scaner->SetUk(uk1);
 	else
-		return;
+        return nullptr;
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
 	{
@@ -104,7 +104,7 @@ void NameSyntax::Prog()
 
 	}
 
-	this->root->CalculateMetrics();
+    return this->root->CalculateMetrics();
 
 }
 

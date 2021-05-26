@@ -21,7 +21,7 @@ int* NameMetricsTree::CalculateMetrics()
 	std::cout << "\nИспользуемых переменных: " << results[1];
 	std::cout << "\nНеиспользуемых переменных: " << results[2];
 	std::cout << "\nОбщее число использований переменных: " << results[3];
-	std::cout << "\nУправляющие переменные: " << results[4];
+    //std::cout << "\nУправляющие переменные: " << results[4];
 	//std::cout << "\nОбщая длина: " << results[4];
 	//std::cout << "\nОператоров continue: " << results[5];
 	//std::cout << "\nОператоров break/return: " << results[6];
