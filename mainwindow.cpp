@@ -52,21 +52,21 @@ QList<int> GetMetrics(std::string filename)
     NameSyntax Name(filename);
 
     QList<int> results_class = Class.Prog();
-    QList<int> results_block = Block.Prog();
     QList<int> results_cycle = Cycle.Prog();
+    QList<int> results_block = Block.Prog();
     QList<int> results_name = Name.Prog();
 
     if (results_class.size())
         for (int i = 0; i < results_class.size(); i++)
             results.append(results_class.at(i));
 
-    if (results_block.size())
-        for (int i = 0; i < results_block.size() ; i++)
-            results.append(results_block.at(i));
-
     if (results_cycle.size())
         for (int i = 0; i < results_cycle.size(); i++)
             results.append(results_cycle.at(i));
+
+    if (results_block.size())
+        for (int i = 0; i < results_block.size() ; i++)
+            results.append(results_block.at(i));
 
     if (results_name.size())
         for (int i = 0; i < results_name.size(); i++)
@@ -81,15 +81,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
-
-
-
+    UpdateTable(nullptr, nullptr);
 
 }
 
-void MainWindow::UpdateTable(QList<int> metrics_1, QList<int> metrics_2)
+void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metrics_2 = nullptr)
 {
     QStandardItemModel *model = new QStandardItemModel;
 
@@ -129,28 +125,33 @@ void MainWindow::UpdateTable(QList<int> metrics_1, QList<int> metrics_2)
     model->setHorizontalHeaderLabels(horizontalheader);
     model->setVerticalHeaderLabels(verticalheader);
 
-    for(int row = 0;row< metrics_1.size();row++)
+    if (metrics_1 != nullptr && metrics_2 != nullptr)
     {
-        QList<QStandardItem*> lst;
-        QStandardItem* item_1 = new QStandardItem(row,0);
-        QStandardItem* item_2 = new QStandardItem(row,1);
-        item_1->setText(QString::number(metrics_1.at(row)));
-        item_2->setText(QString::number(metrics_2.at(row)));
-        item_1->setTextAlignment(Qt::AlignCenter);
-        item_2->setTextAlignment(Qt::AlignCenter);
-        lst << item_1 << item_2;
-        model->setItem(row, 0, item_1);
-        model->setItem(row, 1, item_2);
+        for(int row = 0; row < metrics_1->size(); row++)
+        {
+            QList<QStandardItem*> lst;
+            QStandardItem* item_1 = new QStandardItem(row,0);
+            QStandardItem* item_2 = new QStandardItem(row,1);
+            item_1->setText(QString::number(metrics_1->at(row)));
+            item_2->setText(QString::number(metrics_2->at(row)));
+            item_1->setTextAlignment(Qt::AlignCenter);
+            item_2->setTextAlignment(Qt::AlignCenter);
+            lst << item_1 << item_2;
+            model->setItem(row, 0, item_1);
+            model->setItem(row, 1, item_2);
+        }
     }
 
     ui->tableView->setModel(model);
 }
 
+// максимум из двух чисел
 int max_int(int a, int b)
 {
     return ((a) > (b) ? (a) : (b));
 }
 
+// для округления результата
 float roundTo(float inpValue, int inpCount)
 {
 
@@ -243,7 +244,7 @@ void MainWindow::on_Button_Start_clicked()
     QList<int> metrics_1 = GetMetrics(*text_1);
     QList<int> metrics_2 = GetMetrics(*text_2);
 
-    UpdateTable(metrics_1, metrics_2);
+    UpdateTable(&metrics_1, &metrics_2);
     CalulateResult(metrics_1, metrics_2);
 
 }

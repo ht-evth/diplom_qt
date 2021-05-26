@@ -24,7 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    void UpdateTable(QList<int> metrics_1, QList<int> metrics_2);
+    void UpdateTable(QList<int>* metrics_1, QList<int>* metrics_2);
     void CalulateResult(QList<int> metrics_1, QList<int> metrics_2);
 
 };
