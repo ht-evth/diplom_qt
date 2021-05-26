@@ -25,8 +25,9 @@ NameSyntax::NameSyntax(std::string text)
 
 
 // синтаксический анализатор
-int* NameSyntax::Prog()
+QList<int> NameSyntax::Prog()
 {
+    QList<int> temp;
 	std::string* lex = new std::string();
 
 	int uk1 = scaner->GetUk();			// переменная для хранения указателя в тексте программы
@@ -35,7 +36,7 @@ int* NameSyntax::Prog()
 	if (type_lex != TYPE_CLOSED_BRACE)
 		scaner->SetUk(uk1);
 	else
-        return nullptr;
+        return temp;
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
 	{

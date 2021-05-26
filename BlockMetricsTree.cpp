@@ -10,22 +10,23 @@ BlockMetricsTree::BlockMetricsTree(BlockMetricsTree* l, BlockMetricsTree* r, Blo
 
 
 // вычислить метрики
-int* BlockMetricsTree::CalculateMetrics()
+QList<int> BlockMetricsTree::CalculateMetrics()
 {
-	int results[] = { 0, 0, 0, 0 };
+    QList<int>* results = new QList<int>{ 0, 0, 0, 0 };
+
 
 	DFS(this, results);
 
-	std::cout << "\n\nБлоков: " << results[0];
-	std::cout << "\nВложенных блоков: " << results[1];
-	std::cout << "\nМакс. уровень вложенности блоков: " << results[2];
-	std::cout << "\nОбщая длина: " << results[3];
+    std::cout << "\n\nБлоков: " << results->at(0);
+    std::cout << "\nВложенных блоков: " << results->at(1);
+    std::cout << "\nМакс. уровень вложенности блоков: " << results->at(2);
+    std::cout << "\nОбщая длина: " << results->at(3);
 
-	return results;
+    return *results;
 }
 
 
-void BlockMetricsTree::DFS(BaseMetricsTree* root, int* results)
+void BlockMetricsTree::DFS(BaseMetricsTree* root,  QList<int>* results)
 {
 	if (root)
 	{
@@ -34,19 +35,19 @@ void BlockMetricsTree::DFS(BaseMetricsTree* root, int* results)
 		{
 			// просмотреть текущий узел
 
-			results[0]++;		// кол-во блоков ++
+            results->replace(0, results->at(0) + 1);		// кол-во блоков ++
 
 			// если этот блок вложенный, инкрементируем
 			if (root->n->is_inside)
-				results[1]++;
+                results->replace(1, results->at(1) + 1);
 
 			// если уровень макс уровень вложенности внутри этого блока, больше,
 			// чем запомненный ранее, обновляем значение
 			root->n->max_deep = CalcHeight(root->Right);
-			if (root->n->max_deep > results[2])
-				results[2] = root->n->max_deep;
+            if (root->n->max_deep > results->at(2))
+                results->replace(2, root->n->max_deep);
 
-			results[3] += root->n->length;	// суммируем длины
+            results->replace(3, results->at(3) + root->n->length);
 
 		}
 

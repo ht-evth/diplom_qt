@@ -11,25 +11,21 @@ NameMetricsTree::NameMetricsTree(NameMetricsTree* l, NameMetricsTree* r, NameMet
 
 
 // вычислить метрики
-int* NameMetricsTree::CalculateMetrics()
+QList<int> NameMetricsTree::CalculateMetrics()
 {
-	int results[] = { 0, 0, 0, 0, 0 };
+    QList<int>* results = new QList<int>{ 0, 0, 0, 0 };
 
 	DFS(this, results);
 
-	std::cout << "\n\nОбъявлено переменных: " << results[0];
-	std::cout << "\nИспользуемых переменных: " << results[1];
-	std::cout << "\nНеиспользуемых переменных: " << results[2];
-	std::cout << "\nОбщее число использований переменных: " << results[3];
-    //std::cout << "\nУправляющие переменные: " << results[4];
-	//std::cout << "\nОбщая длина: " << results[4];
-	//std::cout << "\nОператоров continue: " << results[5];
-	//std::cout << "\nОператоров break/return: " << results[6];
+    std::cout << "\n\nОбъявлено переменных: " << results->at(0);
+    std::cout << "\nИспользуемых переменных: " << results->at(1);
+    std::cout << "\nНеиспользуемых переменных: " << results->at(2);
+    std::cout << "\nОбщее число использований переменных: " << results->at(3);
 
-	return results;
+    return *results;
 }
 
-void NameMetricsTree::DFS(BaseMetricsTree* root, int* results)
+void NameMetricsTree::DFS(BaseMetricsTree* root, QList<int>* results)
 {
 	if (root)
 	{
@@ -38,19 +34,19 @@ void NameMetricsTree::DFS(BaseMetricsTree* root, int* results)
 		{
 			if (root->n->ident != "{block}" && root->n->ident != "{inside-block}")
 			{
-				results[0]++;		// кол-во переменных
+                results->replace(0, results->at(0) + 1); // кол-во переменных
 
 				// считаем кол-во использованых переменных
 				if (root->n->number_of_uses > 0)
 				{
-					results[1]++;
-					results[3] += root->n->number_of_uses;
+                    results->replace(1, results->at(1) + 1);
+                    results->replace(3, results->at(3) + root->n->number_of_uses);
 				}
 				else
-					results[2]++;
+                    results->replace(2, results->at(2) + 1);
 
-				if (root->n->managment)
-					results[4]++;
+                if (root->n->managment)
+                    results->replace(4, results->at(4) + 1);
 
 
 			}
@@ -62,34 +58,3 @@ void NameMetricsTree::DFS(BaseMetricsTree* root, int* results)
 		DFS(root->Right, results);
 	}
 }
-
-
-/*
-int NameMetricsTree::used = 0;
-int NameMetricsTree::unused = 0;
-
-void NameMetricsTree::deep()
-{
-	deep(this);
-}
-
-
-void NameMetricsTree::deep(BaseMetricsTree* From)
-{
-	if (From == NULL)
-		return;
-
-	if (From->GetData()->ident != "{}" && From->GetData()->ident != "{inside}" && From->GetData()->ident != "root")
-	{
-		if (From->GetData()->number_of_uses > 0)
-			used++;
-		else
-			unused++;
-	}
-		
-
-	if (((NameMetricsTree*)From)->Right) deep(((NameMetricsTree*)From)->Right);
-	if (((NameMetricsTree*)From)->Left) deep(((NameMetricsTree*)From)->Left);
-
-}
-*/

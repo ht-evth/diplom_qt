@@ -1,5 +1,6 @@
 #pragma once
 #include "Node.h"
+#include <QList>
 
 class BaseMetricsTree
 {
@@ -30,8 +31,8 @@ public:
 	BaseMetricsTree* FindUp(std::string ident); // поиск данных от текущей вершины до корн€	
 	BaseMetricsTree* FindUp(BaseMetricsTree* From, std::string ident);	// поиск данных от заданной вершины до корн€
 
-	virtual int* CalculateMetrics() = 0;				// вычислить метрики
-	virtual void DFS(BaseMetricsTree* root, int* results) = 0;	// ќбход дерева в глубину
+    virtual QList<int> CalculateMetrics() = 0;				// вычислить метрики
+    virtual void DFS(BaseMetricsTree* root, QList<int>* results) = 0;	// ќбход дерева в глубину
 	int CalcHeight(BaseMetricsTree* root);			// получить высоту поддерева
 	// int ....		// получить общее количество соседей в дереве
 

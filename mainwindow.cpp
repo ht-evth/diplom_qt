@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QList>
 #include <iostream>
+#include <QtMath>
 
 #include "ClassSyntax.h"
 #include "BlockSyntax.h"
@@ -50,31 +51,29 @@ QList<int> GetMetrics(std::string filename)
     CyclesSyntax Cycle(filename);
     NameSyntax Name(filename);
 
-    int* results_class = Class.Prog();
-    int* results_block = Block.Prog();
-    int* results_cycle = Cycle.Prog();
-    int* results_name = Name.Prog();
+    QList<int> results_class = Class.Prog();
+    QList<int> results_block = Block.Prog();
+    QList<int> results_cycle = Cycle.Prog();
+    QList<int> results_name = Name.Prog();
 
-    if (results_class != nullptr)
-        for (int i = 0; i < MAX_METRICS_CLASS; i++)
-            results.append(results_class[i]);
+    if (results_class.size())
+        for (int i = 0; i < results_class.size(); i++)
+            results.append(results_class.at(i));
 
-    if (results_class != nullptr)
-        for (int i = 0; i < MAX_METRICS_BLOCK; i++)
-            results.append(results_block[i]);
+    if (results_block.size())
+        for (int i = 0; i < results_block.size() ; i++)
+            results.append(results_block.at(i));
 
-    if (results_class != nullptr)
-        for (int i = 0; i < MAX_METRICS_CYCLE; i++)
-            results.append(results_cycle[i]);
+    if (results_cycle.size())
+        for (int i = 0; i < results_cycle.size(); i++)
+            results.append(results_cycle.at(i));
 
-    if (results_class != nullptr)
-        for (int i = 0; i < MAX_METRICS_NAME; i++)
-            results.append(results_name[i]);
+    if (results_name.size())
+        for (int i = 0; i < results_name.size(); i++)
+            results.append(results_name.at(i));
 
     return results;
 }
-
-
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -83,6 +82,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
+
+
+
+
+}
+
+void MainWindow::UpdateTable(QList<int> metrics_1, QList<int> metrics_2)
+{
     QStandardItemModel *model = new QStandardItemModel;
 
     //Заголовки столбцов
@@ -92,7 +100,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Заголовки строк
     QStringList verticalheader;
-    verticalheader.append("Классы");
     verticalheader.append("Количество классов");
     verticalheader.append("Количество вложенных классов");
     verticalheader.append("Макс. уровень вложенности классов");
@@ -100,7 +107,6 @@ MainWindow::MainWindow(QWidget *parent)
     verticalheader.append("Общее число методов классов");
     verticalheader.append("Общее число классов-потомков (наследников)");
 
-    verticalheader.append("Циклы");
     verticalheader.append("Количество циклов");
     verticalheader.append("Количество вложенных циклов");
     verticalheader.append("Макс. уровень вложенности циклов");
@@ -108,13 +114,12 @@ MainWindow::MainWindow(QWidget *parent)
     verticalheader.append("Общее операторов continue");
     verticalheader.append("Общее операторов break/return");
 
-    verticalheader.append("Блоки");
     verticalheader.append("Количество блоков");
     verticalheader.append("Количество вложенных блоков");
     verticalheader.append("Макс. уровень вложенности блоков");
     verticalheader.append("Общая длина блоков");
 
-    verticalheader.append("Имена");
+
     verticalheader.append("Количество объявленных переменных");
     verticalheader.append("Количество используемых переменных");
     verticalheader.append("Количество неиспользуемых переменных");
@@ -124,9 +129,78 @@ MainWindow::MainWindow(QWidget *parent)
     model->setHorizontalHeaderLabels(horizontalheader);
     model->setVerticalHeaderLabels(verticalheader);
 
+    for(int row = 0;row< metrics_1.size();row++)
+    {
+        QList<QStandardItem*> lst;
+        QStandardItem* item_1 = new QStandardItem(row,0);
+        QStandardItem* item_2 = new QStandardItem(row,1);
+        item_1->setText(QString::number(metrics_1.at(row)));
+        item_2->setText(QString::number(metrics_2.at(row)));
+        item_1->setTextAlignment(Qt::AlignCenter);
+        item_2->setTextAlignment(Qt::AlignCenter);
+        lst << item_1 << item_2;
+        model->setItem(row, 0, item_1);
+        model->setItem(row, 1, item_2);
+    }
+
     ui->tableView->setModel(model);
+}
+
+int max_int(int a, int b)
+{
+    return ((a) > (b) ? (a) : (b));
+}
+
+float roundTo(float inpValue, int inpCount)
+{
+
+
+    double outpValue;
+    double tempVal;
+    tempVal=inpValue*pow(10,inpCount);
+    if (float(int(tempVal))+0.5==tempVal)
+    {
+        if (int(tempVal)%2==0)
+            outpValue=float(qFloor(tempVal))/pow(10,inpCount);
+        else
+            outpValue=float(qCeil(tempVal))/pow(10,inpCount);
+    }
+    else
+    {
+        if (double(int(tempVal))+0.5>tempVal)
+            outpValue=float(qCeil(tempVal))/pow(10,inpCount);
+        else
+            outpValue=float(qFloor(tempVal))/pow(10,inpCount);
+    }
+    return(outpValue);
+}
+
+void MainWindow::CalulateResult(QList<int> metrics_1, QList<int> metrics_2)
+{
+    //d(m1, m2) =  abs(m1-m2)/max(m1,m2)
+    QList<float> temp;
+
+    // вычислить коэф-ты
+    for (int i = 0; i < metrics_1.size(); i++)
+        if (max_int(metrics_1.at(i), metrics_2.at(i)) != 0)
+            temp.append((float)abs(metrics_1.at(i)- metrics_2.at(i))/ max_int(metrics_1.at(i), metrics_2.at(i)));
+
+    if (temp.size())
+    {
+        float sum = 0;
+        for (float value : temp)
+            sum += value;
+
+        float result = (1 - (sum / temp.size())) * 100;
+
+        ui->label_result->setText("Процент совпадения метрик: " + QString::number(roundTo(result, 4)) + "%");
+    }
+    else
+       ui->label_result->setText("Все метрики равны нулю!");
+
 
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -169,6 +243,7 @@ void MainWindow::on_Button_Start_clicked()
     QList<int> metrics_1 = GetMetrics(*text_1);
     QList<int> metrics_2 = GetMetrics(*text_2);
 
-
+    UpdateTable(metrics_1, metrics_2);
+    CalulateResult(metrics_1, metrics_2);
 
 }

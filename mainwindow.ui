@@ -23,9 +23,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>180</y>
+      <y>190</y>
       <width>751</width>
-      <height>271</height>
+      <height>281</height>
      </rect>
     </property>
    </widget>
@@ -90,6 +90,19 @@
       <widget class="QLineEdit" name="lineEdit_File_1"/>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_result">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>490</y>
+      <width>421</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Процент совпадения метрик: </string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

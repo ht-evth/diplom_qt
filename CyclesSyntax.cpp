@@ -26,8 +26,9 @@ CyclesSyntax::CyclesSyntax(std::string text)
 }
 
 // синтаксический анализатор
-int* CyclesSyntax::Prog()
+QList<int> CyclesSyntax::Prog()
 {
+    QList<int> temp;
 	std::string* lex = new std::string();
 
 	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
@@ -39,7 +40,7 @@ int* CyclesSyntax::Prog()
 			scaner->SetUk(uk1);
 	}
 	else
-        return nullptr;
+        return temp;
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
 	{
@@ -52,7 +53,7 @@ int* CyclesSyntax::Prog()
 				scaner->SetUk(uk1);
 		}
 		else
-            return nullptr;
+            return temp;
 
 
 		// SE
@@ -63,7 +64,7 @@ int* CyclesSyntax::Prog()
 			if (is_do_while)
 			{
 				is_do_while = false;
-                return nullptr;
+                return temp;
 			}
 
 			scaner->SetUk(uk1);

@@ -9,7 +9,7 @@ public:
 	CyclesSyntax();								// конструктор класса
 	CyclesSyntax(std::string text);				// конструктор с текстом файла
 
-    int* Prog() override;		// аксиома S -> SE | SX | eps
+    QList<int> Prog() override;		// аксиома S -> SE | SX | eps
 
 	void E();					// E ->  for (c*) | for(c*) { S }	| while X | while X { S }	| do S while
 	void X();					// X -> Xd | d  

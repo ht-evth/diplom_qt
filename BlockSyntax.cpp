@@ -22,8 +22,9 @@ BlockSyntax::BlockSyntax(std::string text)
 }
 
 // синтаксический анализатор
-int* BlockSyntax::Prog()
+QList<int> BlockSyntax::Prog()
 {
+    QList<int> temp;
 	std::string* lex = new std::string();
 
 	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
@@ -36,7 +37,7 @@ int* BlockSyntax::Prog()
 			scaner->SetUk(uk1);
 	}
 	else
-        return nullptr;
+        return temp;
 	
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
@@ -48,7 +49,7 @@ int* BlockSyntax::Prog()
 		if (type_lex != TYPE_CLOSED_BRACE)
 				scaner->SetUk(uk1);
 		else
-            return nullptr;;
+            return temp;;
 
 		// SE
 		if (type_lex == TYPE_OPENED_BRACE)

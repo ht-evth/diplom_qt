@@ -24,8 +24,9 @@ ClassSyntax::ClassSyntax(std::string text)
 
 
 // синтаксический анализатор
-int* ClassSyntax::Prog()
+QList<int> ClassSyntax::Prog()
 {
+    QList<int> temp;
 	BaseMetricsTree* save_cur = root->Cur;
 
 
@@ -36,7 +37,7 @@ int* ClassSyntax::Prog()
 	if (type_lex != TYPE_CLOSED_BRACE)
 		scaner->SetUk(uk1);
 	else
-        return nullptr;
+        return temp;
 
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
@@ -46,7 +47,7 @@ int* ClassSyntax::Prog()
 		if (type_lex != TYPE_CLOSED_BRACE)
 			scaner->SetUk(uk1);
 		else
-            return nullptr;
+            return temp;
 
 		
 		// объ€вление класса начинаетс€ начинаетс€ с ключевого слова class, но перед ним может быть р€д ключевых слов (public, static, ...)

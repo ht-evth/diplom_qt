@@ -11,8 +11,8 @@ public:
 	ClassMetricsTree(std::string name);
 	ClassMetricsTree(ClassMetricsTree* l, ClassMetricsTree* r, ClassMetricsTree* u, Node* Data);
 
-	int* CalculateMetrics() override;
+    QList<int> CalculateMetrics() override;
 	
-	void DFS(BaseMetricsTree* root, int* results) override;	// Обход дерева в глубину
+    void DFS(BaseMetricsTree* root, QList<int>* results) override;	// Обход дерева в глубину
 };
 

@@ -9,7 +9,7 @@ protected:
     BaseMetricsTree* currentNode;   // текущий узел в дереве
 
 public:
-    virtual int* Prog() = 0;    // аксиома
+    virtual QList<int> Prog() = 0;    // аксиома
 
     void PrintTree(bool with_value = false);
 };

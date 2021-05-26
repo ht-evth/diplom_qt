@@ -9,7 +9,7 @@ public:
 	BlockSyntax();								// конструктор класса
 	BlockSyntax(std::string text);				// конструктор с текстом файла
 
-    int* Prog() override;		// аксиома S -> SE | SX | eps
+    QList<int> Prog() override;		// аксиома S -> SE | SX | eps
 
 	void E();					// E ->  { S }
 	void X();					// X -> Xd | d  
