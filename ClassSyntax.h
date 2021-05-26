@@ -15,7 +15,7 @@ public:
 	ClassSyntax();								// конструктор класса
 	ClassSyntax(std::string text);				// конструктор с текстом файла
 
-	void Prog() override;		// аксиома S -> SE | SX | eps
+    int* Prog() override;		// аксиома S -> SE | SX | eps
 
 	void E();					// E ->  class c* id c* {S} | class c* id c * id{ S }
 	void X();					// X -> Xd | d | X id |  id | X c* | X { S }

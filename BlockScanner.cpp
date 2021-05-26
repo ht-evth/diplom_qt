@@ -22,7 +22,7 @@ int BlockScanner::Scan(std::string* lex)
 	if (text[uk] == '\0')
 	{
 		lex[0] = '\0';
-		std::cout << "Конец!" << std::endl;
+        //std::cout << "Конец!" << std::endl;
 		return TYPE_END;
 	}
 

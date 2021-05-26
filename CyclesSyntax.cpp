@@ -26,7 +26,7 @@ CyclesSyntax::CyclesSyntax(std::string text)
 }
 
 // синтаксический анализатор
-void CyclesSyntax::Prog()
+int* CyclesSyntax::Prog()
 {
 	std::string* lex = new std::string();
 
@@ -39,7 +39,7 @@ void CyclesSyntax::Prog()
 			scaner->SetUk(uk1);
 	}
 	else
-		return;
+        return nullptr;
 
 	while (type_lex != TYPE_END && type_lex != TYPE_CLOSED_BRACE)
 	{
@@ -52,7 +52,7 @@ void CyclesSyntax::Prog()
 				scaner->SetUk(uk1);
 		}
 		else
-			return;
+            return nullptr;
 
 
 		// SE
@@ -63,7 +63,7 @@ void CyclesSyntax::Prog()
 			if (is_do_while)
 			{
 				is_do_while = false;
-				return;
+                return nullptr;
 			}
 
 			scaner->SetUk(uk1);
@@ -97,7 +97,7 @@ void CyclesSyntax::Prog()
 
 	}
 
-	root->CalculateMetrics();
+    return root->CalculateMetrics();
 
 }
 
