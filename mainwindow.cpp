@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tableView->resizeColumnsToContents();
     UpdateTable(nullptr, nullptr);
 
 }
@@ -143,6 +144,8 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
     }
 
     ui->tableView->setModel(model);
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // растянуть конкретную секцию
 }
 
 // максимум из двух чисел
@@ -226,6 +229,7 @@ void MainWindow::on_Button_Start_clicked()
     std::string* text_1 = ReadFile(ui->lineEdit_File_1->text());
     std::string* text_2 = ReadFile(ui->lineEdit_File_2->text());
 
+    ui->label_result->setText("Процент совпадения метрик: -");
 
     if (text_1 == nullptr || text_2 == nullptr)
     {

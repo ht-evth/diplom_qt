@@ -104,7 +104,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Процент совпадения метрик: </string>
+     <string>Процент совпадения метрик: -</string>
     </property>
    </widget>
   </widget>

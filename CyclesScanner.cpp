@@ -58,6 +58,41 @@ int CyclesScanner::Scan(std::string* lex)
 	// проверка на спецсимволы
 	else if (text[uk] == '{') { lex->insert(i++, 1, text[uk++]); return TYPE_OPENED_BRACE; }
 	else if (text[uk] == '}') { lex->insert(i++, 1, text[uk++]); return TYPE_CLOSED_BRACE; }
+    // если константы строковые (чтобы не возвращало TYPE_IDENT между кавычек)
+    else if (text[uk] == '\'')
+    {
+        uk++;
+        while ((text[uk] != '\'') && (text[uk] != '\0' && (text[uk] != '\n')))
+        {
+            lex->insert(i++, 1, text[uk++]);
+        }
+
+
+        if (text[uk] == '\0' || text[uk] == '\n')
+        {
+            std::cout << "Была пропущена одинарная кавычка.";
+            exit(-1);
+        }
+        uk++;
+        return TYPE_OTHER;
+    }
+    // если константы символьные (чтобы не возвращало TYPE_IDENT между кавычек)
+    else if (text[uk] == '\"')
+    {
+        uk++;
+        while ((text[uk] != '\"') && (text[uk] != '\0') && (text[uk] != '\n'))
+        {
+            lex->insert(i++, 1, text[uk++]);
+        }
+
+        if (text[uk] == '\0' || text[uk] == '\n')
+        {
+            std::cout << "Была пропущена двойная кавычка.";
+            exit(-1);
+        }
+        uk++;
+        return TYPE_OTHER;
+    }
 
 	// что-то другое
 	else
