@@ -17,10 +17,10 @@ QList<int> BlockMetricsTree::CalculateMetrics()
 
 	DFS(this, results);
 
-    std::cout << "\n\nБлоков: " << results->at(0);
-    std::cout << "\nВложенных блоков: " << results->at(1);
-    std::cout << "\nМакс. уровень вложенности блоков: " << results->at(2);
-    std::cout << "\nОбщая длина: " << results->at(3);
+    //std::cout << "\n\nБлоков: " << results->at(0);
+    //std::cout << "\nВложенных блоков: " << results->at(1);
+    //std::cout << "\nМакс. уровень вложенности блоков: " << results->at(2);
+    //std::cout << "\nОбщая длина: " << results->at(3);
 
     return *results;
 }
@@ -47,7 +47,8 @@ void BlockMetricsTree::DFS(BaseMetricsTree* root,  QList<int>* results)
             if (root->n->max_deep > results->at(2))
                 results->replace(2, root->n->max_deep);
 
-            results->replace(3, results->at(3) + root->n->length);
+            if (root->n->ident != "^root")
+                results->replace(3, results->at(3) + root->n->length);
 
 		}
 

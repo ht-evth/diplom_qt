@@ -18,12 +18,12 @@ QList<int> ClassMetricsTree::CalculateMetrics()
 
 
 
-    std::cout << "\n\nКлассов: " << results->at(0);
-    std::cout << "\nВложенных классов: " << results->at(1);
-    std::cout << "\nМакс. уровень вложенности классов: " << results->at(2);
-    std::cout << "\nОбщая длина: " << results->at(3);
-    std::cout << "\nВсего методов: " << results->at(4);
-    std::cout << "\nВсего классов-потомков: " << results->at(5);
+    //std::cout << "\n\nКлассов: " << results->at(0);
+    //std::cout << "\nВложенных классов: " << results->at(1);
+    //std::cout << "\nМакс. уровень вложенности классов: " << results->at(2);
+    //std::cout << "\nОбщая длина: " << results->at(3);
+    //std::cout << "\nВсего методов: " << results->at(4);
+    //std::cout << "\nВсего классов-потомков: " << results->at(5);
 
     return *results;
 }

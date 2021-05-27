@@ -1,6 +1,6 @@
 #include "NameScanner.h"
 #include <iostream>
-
+#include <QMessageBox>
 
 NameScanner::NameScanner()
 {
@@ -175,8 +175,17 @@ int NameScanner::Scan(std::string* lex)
 		
 		if (text[uk] == '\0' || text[uk] == '\n')
 		{
-			std::cout << "Была пропущена одинарная кавычка.";
-			exit(-1);
+            QMessageBox* pmbx =
+                                new QMessageBox("Критическая ошибка!",
+                                "Была пропущена одинарная кавычка.",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            delete pmbx;
+            //std::cout << "Была пропущена одинарная кавычка.";
+            exit(-1);
 		}
 		uk++;
 		return TYPE_OTHER; 
@@ -192,8 +201,16 @@ int NameScanner::Scan(std::string* lex)
 		
 		if (text[uk] == '\0' || text[uk] == '\n')
 		{
-			std::cout << "Была пропущена двойная кавычка.";
-			exit(-1);
+            QMessageBox* pmbx =
+                                new QMessageBox("Критическая ошибка!",
+                                "Была пропущена двойная кавычка",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            //std::cout << "Была пропущена двойная кавычка";
+            exit(-1);
 		}
 		uk++;
 		return TYPE_OTHER;

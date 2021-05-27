@@ -100,13 +100,13 @@ void BlockSyntax::E()
 		this->currentNode->n->is_inside = true;
 
 
-	std::cout << "\nВошли в блок " << name;
+    //std::cout << "\nВошли в блок " << name;
 
 	// вложенность
 	Prog();
 
 	// Выход из вложенности
-	std::cout << "\nВышли из блока" << name;
+    //std::cout << "\nВышли из блока" << name;
 	this->currentNode = save_parent;
 }
 

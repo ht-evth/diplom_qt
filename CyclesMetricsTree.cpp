@@ -15,12 +15,12 @@ QList<int> CyclesMetricsTree::CalculateMetrics()
 
 	DFS(this, results);
 
-    std::cout << "\n\nЦиклов: " << results->at(0);
-    std::cout << "\nВложенных циклов: " << results->at(1);
-    std::cout << "\nМакс. уровень вложенности циклов: " << results->at(2);
-    std::cout << "\nОбщая длина: " << results->at(3);
-    std::cout << "\nОператоров continue: " << results->at(4);
-    std::cout << "\nОператоров break/return: " << results->at(5);
+    //std::cout << "\n\nЦиклов: " << results->at(0);
+    //std::cout << "\nВложенных циклов: " << results->at(1);
+    //std::cout << "\nМакс. уровень вложенности циклов: " << results->at(2);
+    //std::cout << "\nОбщая длина: " << results->at(3);
+    //std::cout << "\nОператоров continue: " << results->at(4);
+    //std::cout << "\nОператоров break/return: " << results->at(5);
 
     return *results;
 }

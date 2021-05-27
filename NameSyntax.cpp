@@ -2,6 +2,7 @@
 #include "NameScanner.h"
 #include "NameMetricsTree.h"
 #include <iostream>
+#include <QMessageBox>
 
 
 NameSyntax::NameSyntax()
@@ -147,8 +148,16 @@ void NameSyntax::D()
 	// сейчас уже считан ident
 	if (type_lex != TYPE_IDENT)
 	{
-		std::cout << "ќжидалс€ идентификатор при объ€влении переменной.";
-		exit(-1);
+        QMessageBox* pmbx =
+                            new QMessageBox(" ритическа€ ошибка!",
+                            "ќжидалс€ идентификатор при объ€влении переменной.",
+                            QMessageBox::Critical,
+                            QMessageBox::Ok,
+                            0,
+                            0);
+        pmbx->exec();
+        //std::cout << "ќжидалс€ идентификатор при объ€влении переменной.";
+        exit(-1);
 	}
 
 	NameMetricsTree* new_node = new NameMetricsTree(*lex);
@@ -161,8 +170,16 @@ void NameSyntax::D()
 	{
 		if (*lex != ":" && *lex != "in")
 		{
-			std::cout << "ќжидалась точка с зап€той при объ€влении переменных.";
-			exit(-1);
+            QMessageBox* pmbx =
+                                new QMessageBox(" ритическа€ ошибка!",
+                                "ќжидалась точка с зап€той при объ€влении переменных.",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            //std::cout << "ќжидалась точка с зап€той при объ€влении переменных.";
+            exit(-1);
 		}
 	}
 

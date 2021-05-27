@@ -2,6 +2,7 @@
 #include "CyclesScanner.h"
 #include "CyclesMetricsTree.h"
 #include <iostream>
+#include <QMessageBox>
 
 CyclesSyntax::CyclesSyntax()
 {
@@ -132,8 +133,17 @@ void CyclesSyntax::E()
 				type_lex = scaner->Scan(lex);
 				if (type_lex == TYPE_END)
 				{
-					std::cout << "Ожидалась скобка ')' для оператора цикла for";
-					exit(-1);
+                    //std::cout << "Ожидалась скобка ')' для оператора цикла for";
+                    //exit(-1);
+                    QMessageBox* pmbx =
+                                        new QMessageBox("Критическая ошибка!",
+                                        "Ожидалась скобка ')' для оператора цикла for",
+                                        QMessageBox::Critical,
+                                        QMessageBox::Ok,
+                                        0,
+                                        0);
+                    pmbx->exec();
+                    delete pmbx;
 				}
 			}
 
@@ -153,7 +163,7 @@ void CyclesSyntax::E()
 				if (save_parent->Up)
 					this->currentNode->n->is_inside = true;
 
-				std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
+                //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
 				// вложенность
 
 				scaner->SetUk(uk1);
@@ -194,7 +204,7 @@ void CyclesSyntax::E()
 			if (save_parent->Up)
 				this->currentNode->n->is_inside = true;
 
-			std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
+            //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
 
 			Prog();
 		}
@@ -219,7 +229,7 @@ void CyclesSyntax::E()
 		if (save_parent->Up)
 			this->currentNode->n->is_inside = true;
 
-		std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
+        //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
 
 	
 		int uk2 = scaner->GetUk();
@@ -237,15 +247,24 @@ void CyclesSyntax::E()
 		type_lex = scaner->Scan(lex);
 		if (type_lex != TYPE_WHILE)
 		{
-			std::cout << "ожидается оператор while для do-while.";
-			exit(-1);
+            QMessageBox* pmbx =
+                                new QMessageBox("Критическая ошибка!",
+                                "ожидается оператор while для do-while.",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            delete pmbx;
+            //std::cout << "ожидается оператор while для do-while.";
+            exit(-1);
 		}
 
 	}
 
 
 	// восстанавливаем текущий узел - выход из вложенности
-	std::cout << "\nВыходим из " << name << " возврат в (" << save_parent << ")";
+    //std::cout << "\nВыходим из " << name << " возврат в (" << save_parent << ")";
 	this->currentNode = save_parent;
 
 }

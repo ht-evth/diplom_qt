@@ -17,10 +17,10 @@ QList<int> NameMetricsTree::CalculateMetrics()
 
 	DFS(this, results);
 
-    std::cout << "\n\nОбъявлено переменных: " << results->at(0);
-    std::cout << "\nИспользуемых переменных: " << results->at(1);
-    std::cout << "\nНеиспользуемых переменных: " << results->at(2);
-    std::cout << "\nОбщее число использований переменных: " << results->at(3);
+    //std::cout << "\n\nОбъявлено переменных: " << results->at(0);
+    //std::cout << "\nИспользуемых переменных: " << results->at(1);
+    //std::cout << "\nНеиспользуемых переменных: " << results->at(2);
+    //std::cout << "\nОбщее число использований переменных: " << results->at(3);
 
     return *results;
 }

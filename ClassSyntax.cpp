@@ -2,6 +2,7 @@
 #include "ClassScanner.h"
 #include "ClassMetricsTree.h"
 #include <iostream>
+#include <QMessageBox>
 
 ClassSyntax::ClassSyntax()
 {
@@ -111,8 +112,17 @@ void ClassSyntax::E()
 
 			if (type_lex == TYPE_END)
 			{
-				std::cout << "Неожиданный конец файла. Синтаксическая ошибка";
-				exit(-1);
+                //std::cout << "Неожиданный конец файла. Синтаксическая ошибка";
+                QMessageBox* pmbx =
+                                    new QMessageBox("Критическая ошибка!",
+                                    "Неожиданный конец файла. Синтаксическая ошибка",
+                                    QMessageBox::Critical,
+                                    QMessageBox::Ok,
+                                    0,
+                                    0);
+                pmbx->exec();
+                delete pmbx;
+                exit(-1);
 			}
 		}
 
@@ -131,7 +141,7 @@ void ClassSyntax::E()
 				this->currentNode->n->is_inside = true;
 
 
-			std::cout << "\nПереходим в " << *lex << " (" << this->currentNode << ")";
+            //std::cout << "\nПереходим в " << *lex << " (" << this->currentNode << ")";
 			std::string name = *lex;
 
 			type_lex = scaner->Scan(lex);
@@ -143,8 +153,18 @@ void ClassSyntax::E()
 
 				if (type_lex == TYPE_END)
 				{
-					std::cout << "Неожиданный конец файла. Синтаксическая ошибка";
-					exit(-1);
+
+                    QMessageBox* pmbx =
+                                        new QMessageBox("Критическая ошибка!",
+                                        "Неожиданный конец файла. Синтаксическая ошибка",
+                                        QMessageBox::Critical,
+                                        QMessageBox::Ok,
+                                        0,
+                                        0);
+                    pmbx->exec();
+                    delete pmbx;
+                    //std::cout << "Неожиданный конец файла. Синтаксическая ошибка";
+                    exit(-1);
 				}
 
 			}
@@ -173,7 +193,7 @@ void ClassSyntax::E()
 
 			// восстанавливаем текущий узел
 			this->currentNode = save_parent;
-			std::cout << "\nВыходим из " << name << " Возвращаемся в (" << save_parent << ")";
+            //std::cout << "\nВыходим из " << name << " Возвращаемся в (" << save_parent << ")";
 			
 		}
 
@@ -213,8 +233,17 @@ void ClassSyntax::X()
 					type_lex = scaner->Scan(lex);
 					if (type_lex == TYPE_END)
 					{
-						std::cout << "\nНеожиданный конец файла. Вероятно ошибка, при объявлении метода класса.";
-						exit(-1);
+                        QMessageBox* pmbx =
+                                            new QMessageBox("Критическая ошибка!",
+                                            "Неожиданный конец файла. Вероятно ошибка, при объявлении метода класса. Синтаксическая ошибка",
+                                            QMessageBox::Critical,
+                                            QMessageBox::Ok,
+                                            0,
+                                            0);
+                        pmbx->exec();
+                        delete pmbx;
+                        //std::cout << "\nНеожиданный конец файла. Вероятно ошибка, при объявлении метода класса.";
+                        exit(-1);
 					}
 				}
 			}

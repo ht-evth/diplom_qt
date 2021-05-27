@@ -41,7 +41,7 @@ std::string* ReadFile(QString filename)
 }
 
 
-// считываем файл
+// вычисляем метрики
 QList<int> GetMetrics(std::string filename)
 {
     QList<int> results;
@@ -90,7 +90,7 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
 {
     QStandardItemModel *model = new QStandardItemModel;
 
-    //Заголовки столбцов
+    // заголовки столбцов
     QStringList horizontalheader;
     horizontalheader.append("Файл 1");
     horizontalheader.append("Файл 2");
@@ -99,7 +99,7 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
     QStringList verticalheader;
     verticalheader.append("Количество классов");
     verticalheader.append("Количество вложенных классов");
-    verticalheader.append("Макс. уровень вложенности классов");
+    verticalheader.append("Макс. уровень вложнности классов");
     verticalheader.append("Общая длина классов");
     verticalheader.append("Общее число методов классов");
     verticalheader.append("Общее число классов-потомков (наследников)");
@@ -108,12 +108,12 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
     verticalheader.append("Количество вложенных циклов");
     verticalheader.append("Макс. уровень вложенности циклов");
     verticalheader.append("Общая длина циклов");
-    verticalheader.append("Общее операторов continue");
-    verticalheader.append("Общее операторов break/return");
+    verticalheader.append("Число операторов continue в циклах");
+    verticalheader.append("Число операторов break/return в циклах");
 
-    verticalheader.append("Количество блоков");
+    verticalheader.append("Количнство блоков");
     verticalheader.append("Количество вложенных блоков");
-    verticalheader.append("Макс. уровень вложенности блоков");
+    verticalheader.append("Максимальный уровень вложенности блоков");
     verticalheader.append("Общая длина блоков");
 
 
@@ -137,6 +137,8 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
             item_2->setText(QString::number(metrics_2->at(row)));
             item_1->setTextAlignment(Qt::AlignCenter);
             item_2->setTextAlignment(Qt::AlignCenter);
+            item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+            item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
             lst << item_1 << item_2;
             model->setItem(row, 0, item_1);
             model->setItem(row, 1, item_2);
@@ -145,16 +147,17 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
 
     ui->tableView->setModel(model);
     ui->tableView->horizontalHeader()->setStretchLastSection(true);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch); // растянуть конкретную секцию
+    ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
-// максимум из двух чисел
+// вернуть максимум
 int max_int(int a, int b)
 {
     return ((a) > (b) ? (a) : (b));
 }
 
-// для округления результата
+// округление результата
 float roundTo(float inpValue, int inpCount)
 {
 
@@ -184,7 +187,7 @@ void MainWindow::CalulateResult(QList<int> metrics_1, QList<int> metrics_2)
     //d(m1, m2) =  abs(m1-m2)/max(m1,m2)
     QList<float> temp;
 
-    // вычислить коэф-ты
+    // вычисляем метрики для ненулевых значений
     for (int i = 0; i < metrics_1.size(); i++)
         if (max_int(metrics_1.at(i), metrics_2.at(i)) != 0)
             temp.append((float)abs(metrics_1.at(i)- metrics_2.at(i))/ max_int(metrics_1.at(i), metrics_2.at(i)));
@@ -235,9 +238,9 @@ void MainWindow::on_Button_Start_clicked()
     {
         QString error_message = "";
         if (text_1 == nullptr)
-            error_message += "Файл 1 не был открыт!";
+            error_message += "Не удалось открыть файл 1!";
         if (text_2 == nullptr)
-            error_message += "\nФайл 2 не был открыт!";
+            error_message += "\nНе удалось открыть файл 2!";
 
         QMessageBox error("Ошибка открытия файла!", error_message, QMessageBox::Icon::Critical, QMessageBox::Button::Ok, 0, 0);
         error.exec();

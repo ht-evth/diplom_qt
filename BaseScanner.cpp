@@ -24,7 +24,7 @@ void BaseScanner::SkipSymbols()
 	while (true)
 	{
 		// пропускаем пробелы, табуляции и переносы строк 
-		while ((text[uk] == ' ') || (text[uk] == '\n') || (text[uk] == '\t'))
+        while ((text[uk] == ' ') || (text[uk] == '\n') || (text[uk] == '\r') || (text[uk] == '\t'))
 		{
 			uk++;
 		}

@@ -1,5 +1,6 @@
 #include "CyclesScanner.h"
 #include <iostream>
+#include <QMessageBox>
 
 CyclesScanner::CyclesScanner()
 {
@@ -70,7 +71,16 @@ int CyclesScanner::Scan(std::string* lex)
 
         if (text[uk] == '\0' || text[uk] == '\n')
         {
-            std::cout << "Была пропущена одинарная кавычка.";
+            //std::cout << "Была пропущена одинарная кавычка.";
+            QMessageBox* pmbx =
+                                new QMessageBox("Критическая ошибка!",
+                                "Была пропущена одинарная кавычка. Синтаксическая ошибка",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            delete pmbx;
             exit(-1);
         }
         uk++;
@@ -87,7 +97,16 @@ int CyclesScanner::Scan(std::string* lex)
 
         if (text[uk] == '\0' || text[uk] == '\n')
         {
-            std::cout << "Была пропущена двойная кавычка.";
+            QMessageBox* pmbx =
+                                new QMessageBox("Критическая ошибка!",
+                                "Была пропущена двойная кавычка. Синтаксическая ошибка",
+                                QMessageBox::Critical,
+                                QMessageBox::Ok,
+                                0,
+                                0);
+            pmbx->exec();
+            delete pmbx;
+            //std::cout << "Была пропущена двойная кавычка.";
             exit(-1);
         }
         uk++;
