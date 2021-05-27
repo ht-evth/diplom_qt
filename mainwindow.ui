@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Система анализа программного кода на плагиат</string>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
