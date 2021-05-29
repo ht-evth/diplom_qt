@@ -45,9 +45,6 @@ void NameMetricsTree::DFS(BaseMetricsTree* root, QList<int>* results)
 				else
                     results->replace(2, results->at(2) + 1);
 
-                if (root->n->managment)
-                    results->replace(4, results->at(4) + 1);
-
 
 			}
 
