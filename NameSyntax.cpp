@@ -52,10 +52,10 @@ QList<int> NameSyntax::Prog()
 		if (type_lex == TYPE_TYPE)
 		{
 			int uk_before_ident = scaner->GetUk();	// сохраним значение указателя до идентифактора
-			while (type_lex == TYPE_TYPE)
+            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
 			{
 				type_lex = scaner->Scan(lex);
-				if (type_lex == TYPE_TYPE)
+                if (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
 					uk_before_ident = scaner->GetUk();
 			}
 
@@ -74,6 +74,10 @@ QList<int> NameSyntax::Prog()
 					scaner->SetUk(uk_before_ident);
 					D();	// перейдём к ветке D -> t* id K;
 				}
+                else
+                {
+                    V();
+                }
 
 			}
 
@@ -279,6 +283,85 @@ void NameSyntax::X()
 
 	// восстановим указатель перед лексемой, из-за которой вышли из цикла
 	scaner->SetUk(uk1);
+
+}
+
+void NameSyntax::V()
+{
+    //V -> (t * p id B) {
+
+    // указатель до (
+    std::string* lex = new std::string();
+
+    int uk1 = scaner->GetUk();
+    int type_lex = scaner->Scan(lex);
+    type_lex = scaner->Scan(lex);
+
+    while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+    {
+        type_lex = scaner->Scan(lex);
+    }
+
+    if (type_lex == TYPE_IDENT)
+    {
+        NameMetricsTree* new_node = new NameMetricsTree(*lex);
+        this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
+
+        B();
+    }
+
+}
+
+void NameSyntax::B()
+{
+
+    std::string* lex = new std::string();
+
+    int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
+    int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+    scaner->SetUk(uk1);
+
+    // ожидается запятая
+
+    while (*lex != ")" && type_lex != TYPE_END)
+    {
+
+        uk1 = scaner->GetUk();
+        type_lex = scaner->Scan(lex);
+
+        if (*lex == ")") break;
+
+
+        if (type_lex == TYPE_COMMA)
+        {
+            type_lex = scaner->Scan(lex);
+
+            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+            {
+                type_lex = scaner->Scan(lex);
+            }
+
+            // ожидается идентификатор
+            if (type_lex == TYPE_IDENT)
+            {
+                // новый узел дерева
+                NameMetricsTree* new_node = new NameMetricsTree(*lex);
+                this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
+
+                continue;
+            }
+
+
+        }
+
+        // если точка с запятой или конец файла
+        else if (type_lex == TYPE_END || *lex == ")")
+        {
+            break;
+        }
+
+
+    }
 
 }
 

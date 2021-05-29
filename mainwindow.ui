@@ -23,38 +23,17 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <property name="leftMargin">
-     <number>20</number>
-    </property>
-    <property name="topMargin">
-     <number>15</number>
-    </property>
-    <property name="rightMargin">
-     <number>20</number>
-    </property>
-    <property name="bottomMargin">
-     <number>15</number>
-    </property>
-    <property name="horizontalSpacing">
-     <number>6</number>
-    </property>
-    <property name="verticalSpacing">
-     <number>20</number>
-    </property>
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
       <property name="spacing">
        <number>15</number>
       </property>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="Button_Open_File_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_File_1">
         <property name="text">
-         <string>Открыть...</string>
+         <string>Файл 1</string>
         </property>
        </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_File_2"/>
       </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="Button_Open_File_1">
@@ -70,24 +49,44 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_File_1">
-        <property name="text">
-         <string>Файл 1</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="lineEdit_File_1"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit_File_2"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="Button_Open_File_2">
+        <property name="text">
+         <string>Открыть...</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QPushButton" name="Button_Start">
-      <property name="text">
-       <string>Выполнить</string>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>100</number>
       </property>
-     </widget>
+      <item>
+       <widget class="QCheckBox" name="checkBox_for_classes">
+        <property name="text">
+         <string>Учитывать метрики классов</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="Button_Start">
+        <property name="text">
+         <string>Выполнить</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="2" column="0">
      <widget class="QTableView" name="tableView"/>

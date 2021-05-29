@@ -18,6 +18,8 @@ public:
 	void D();					// D -> t* id K;
 	void K();					// K -> , id K | , p id  K | eps
 	void X();					// X -> Xd | d | X id |  id 
+    void V();
+    void B();
 
 
 };

@@ -99,7 +99,7 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
     QStringList verticalheader;
     verticalheader.append("Количество классов");
     verticalheader.append("Количество вложенных классов");
-    verticalheader.append("Макс. уровень вложнности классов");
+    verticalheader.append("Макс. уровень вложенности классов");
     verticalheader.append("Общая длина классов");
     verticalheader.append("Общее число методов классов");
     verticalheader.append("Общее число классов-потомков (наследников)");
@@ -111,7 +111,7 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
     verticalheader.append("Число операторов continue в циклах");
     verticalheader.append("Число операторов break/return в циклах");
 
-    verticalheader.append("Количнство блоков");
+    verticalheader.append("Количество блоков");
     verticalheader.append("Количество вложенных блоков");
     verticalheader.append("Максимальный уровень вложенности блоков");
     verticalheader.append("Общая длина блоков");
@@ -189,8 +189,12 @@ void MainWindow::CalulateResult(QList<int> metrics_1, QList<int> metrics_2)
 
     // вычисляем метрики для ненулевых значений
     for (int i = 0; i < metrics_1.size(); i++)
+    {
+        if (ui->checkBox_for_classes->isChecked() == false && i < 5)
+            continue;
         if (max_int(metrics_1.at(i), metrics_2.at(i)) != 0)
             temp.append((float)abs(metrics_1.at(i)- metrics_2.at(i))/ max_int(metrics_1.at(i), metrics_2.at(i)));
+    }
 
     if (temp.size())
     {
