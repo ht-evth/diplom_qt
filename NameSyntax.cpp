@@ -52,10 +52,10 @@ QList<int> NameSyntax::Prog()
 		if (type_lex == TYPE_TYPE)
 		{
 			int uk_before_ident = scaner->GetUk();	// сохраним значение указателя до идентифактора
-            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER || *lex == "[" || *lex == "]")
 			{
 				type_lex = scaner->Scan(lex);
-                if (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+                if (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER || *lex == "[" || *lex == "]")
 					uk_before_ident = scaner->GetUk();
 			}
 
@@ -297,7 +297,7 @@ void NameSyntax::V()
     int type_lex = scaner->Scan(lex);
     type_lex = scaner->Scan(lex);
 
-    while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+    while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER || *lex == "[" || *lex == "]")
     {
         type_lex = scaner->Scan(lex);
     }
@@ -336,7 +336,7 @@ void NameSyntax::B()
         {
             type_lex = scaner->Scan(lex);
 
-            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER)
+            while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER || *lex == "[" || *lex == "]")
             {
                 type_lex = scaner->Scan(lex);
             }

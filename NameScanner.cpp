@@ -27,6 +27,7 @@ NameScanner::NameScanner()
 		"auto",
 		"var",
 		"typedef",
+        "void"
 	};
 
 	this->reservedwords = {

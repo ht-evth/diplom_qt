@@ -106,7 +106,7 @@ void ClassSyntax::E()
 	{
 		type_lex = scaner->Scan(lex);
 
-		while (type_lex == TYPE_KEYWORD)
+        while (type_lex == TYPE_KEYWORD)
 		{
 			type_lex = scaner->Scan(lex);
 
@@ -223,6 +223,7 @@ void ClassSyntax::X()
 			int uk_after_ident = scaner->GetUk();
 			type_lex = scaner->Scan(lex);
 
+
 			// если после идентификатора следует ( - это метод
 			if (type_lex == TYPE_OTHER && *lex == "(")
 			{
@@ -254,7 +255,7 @@ void ClassSyntax::X()
 		else if (type_lex == TYPE_TYPE)
 		{
 			int uk2 = scaner->GetUk();
-			while (type_lex == TYPE_TYPE || (type_lex == TYPE_OTHER && *lex == "*"))
+            while (type_lex == TYPE_TYPE || (type_lex == TYPE_OTHER && *lex == "*") || *lex == "[" || *lex == "]" )
 			{
 				uk2 = scaner->GetUk();
 				type_lex = scaner->Scan(lex);
@@ -265,8 +266,7 @@ void ClassSyntax::X()
 			if (type_lex == TYPE_IDENT)
 			{
 				// тут считаем кол - во методов и полей
-
-				int uk_after_ident = scaner->GetUk();
+                int uk_after_ident = scaner->GetUk();
 				type_lex = scaner->Scan(lex);
 
 				// если после идентификатора следует ( - это метод
