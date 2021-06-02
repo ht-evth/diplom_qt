@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardItem>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     void UpdateTable(QList<int>* metrics_1, QList<int>* metrics_2);
     void CalulateResult(QList<int> metrics_1, QList<int> metrics_2);
+    void SetColorForPairCells(QStandardItem* item_1,  QStandardItem* item_2, int value_1, int value_2);
 
 };
 

@@ -86,6 +86,33 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+void MainWindow::SetColorForPairCells(QStandardItem* item_1,  QStandardItem* item_2, int value_1, int value_2)
+{
+    if (value_1 != 0 || value_2 != 0)
+    {
+        if (value_1 == value_2)
+        {
+            item_1->setBackground(QColor(255, 0, 0, 127));
+            item_2->setBackground(QColor(255, 0, 0, 127));
+        }
+        else if (abs(value_1 - value_2) > ((value_1 + value_2) / 2))
+        {
+            item_1->setBackground(QColor(0, 255, 127, 127));
+            item_2->setBackground(QColor(0, 255, 127, 127));
+        }
+        else
+        {
+            item_1->setBackground(QColor(255, 255, 153, 127));
+            item_2->setBackground(QColor(255, 255, 153, 127));
+        }
+    }
+
+    item_1->setTextAlignment(Qt::AlignCenter);
+    item_2->setTextAlignment(Qt::AlignCenter);
+    item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+    item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+}
+
 void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metrics_2 = nullptr)
 {
     QStandardItemModel *model = new QStandardItemModel;
@@ -135,10 +162,7 @@ void MainWindow::UpdateTable(QList<int>* metrics_1 = nullptr, QList<int>* metric
             QStandardItem* item_2 = new QStandardItem(row,1);
             item_1->setText(QString::number(metrics_1->at(row)));
             item_2->setText(QString::number(metrics_2->at(row)));
-            item_1->setTextAlignment(Qt::AlignCenter);
-            item_2->setTextAlignment(Qt::AlignCenter);
-            item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
-            item_1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+            SetColorForPairCells(item_1, item_2, metrics_1->at(row), metrics_2->at(row));
             lst << item_1 << item_2;
             model->setItem(row, 0, item_1);
             model->setItem(row, 1, item_2);
