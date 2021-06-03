@@ -1,6 +1,6 @@
 #include "BlockMetricsTree.h"
 
-// конструкторы классов вызывают базовый конструктор
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ РєР»Р°СЃСЃРѕРІ РІС‹Р·С‹РІР°СЋС‚ Р±Р°Р·РѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 
 BlockMetricsTree::BlockMetricsTree() : BaseMetricsTree() { }
 
@@ -9,7 +9,7 @@ BlockMetricsTree::BlockMetricsTree(std::string name) : BaseMetricsTree(name) { }
 BlockMetricsTree::BlockMetricsTree(BlockMetricsTree* l, BlockMetricsTree* r, BlockMetricsTree* u, Node* Data) : BaseMetricsTree(l, r, u, Data) { }
 
 
-// вычислить метрики
+// РІС‹С‡РёСЃР»РёС‚СЊ РјРµС‚СЂРёРєРё
 QList<int> BlockMetricsTree::CalculateMetrics()
 {
     QList<int>* results = new QList<int>{ 0, 0, 0, 0 };
@@ -17,10 +17,10 @@ QList<int> BlockMetricsTree::CalculateMetrics()
 
 	DFS(this, results);
 
-    //std::cout << "\n\nБлоков: " << results->at(0);
-    //std::cout << "\nВложенных блоков: " << results->at(1);
-    //std::cout << "\nМакс. уровень вложенности блоков: " << results->at(2);
-    //std::cout << "\nОбщая длина: " << results->at(3);
+    //std::cout << "\n\nР‘Р»РѕРєРѕРІ: " << results->at(0);
+    //std::cout << "\nР’Р»РѕР¶РµРЅРЅС‹С… Р±Р»РѕРєРѕРІ: " << results->at(1);
+    //std::cout << "\nРњР°РєСЃ. СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё Р±Р»РѕРєРѕРІ: " << results->at(2);
+    //std::cout << "\nРћР±С‰Р°СЏ РґР»РёРЅР°: " << results->at(3);
 
     return *results;
 }
@@ -30,19 +30,19 @@ void BlockMetricsTree::DFS(BaseMetricsTree* root,  QList<int>* results)
 {
 	if (root)
 	{
-		// если мы не в корне дерева
+		// РµСЃР»Рё РјС‹ РЅРµ РІ РєРѕСЂРЅРµ РґРµСЂРµРІР°
 		if (root->Up)
 		{
-			// просмотреть текущий узел
+			// РїСЂРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РµРєСѓС‰РёР№ СѓР·РµР»
 
-            results->replace(0, results->at(0) + 1);		// кол-во блоков ++
+            results->replace(0, results->at(0) + 1);		// РєРѕР»-РІРѕ Р±Р»РѕРєРѕРІ ++
 
-			// если этот блок вложенный, инкрементируем
+			// РµСЃР»Рё СЌС‚РѕС‚ Р±Р»РѕРє РІР»РѕР¶РµРЅРЅС‹Р№, РёРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј
 			if (root->n->is_inside)
                 results->replace(1, results->at(1) + 1);
 
-			// если уровень макс уровень вложенности внутри этого блока, больше,
-			// чем запомненный ранее, обновляем значение
+			// РµСЃР»Рё СѓСЂРѕРІРµРЅСЊ РјР°РєСЃ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё РІРЅСѓС‚СЂРё СЌС‚РѕРіРѕ Р±Р»РѕРєР°, Р±РѕР»СЊС€Рµ,
+			// С‡РµРј Р·Р°РїРѕРјРЅРµРЅРЅС‹Р№ СЂР°РЅРµРµ, РѕР±РЅРѕРІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ
 			root->n->max_deep = CalcHeight(root->Right);
             if (root->n->max_deep > results->at(2))
                 results->replace(2, root->n->max_deep);
@@ -52,7 +52,7 @@ void BlockMetricsTree::DFS(BaseMetricsTree* root,  QList<int>* results)
 
 		}
 
-		// перейти к потомкам
+		// РїРµСЂРµР№С‚Рё Рє РїРѕС‚РѕРјРєР°Рј
 		DFS(root->Left, results);
 		DFS(root->Right, results);
 	}

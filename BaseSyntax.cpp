@@ -3,6 +3,6 @@
 
 void BaseSyntax::PrintTree(bool with_value)
 {
-	std::cout << std::endl << std::endl << "Δεπεβξ:" << std::endl;
+	std::cout << std::endl << std::endl << "Π”ΠµΡ€ΠµΠ²ΠΎ:" << std::endl;
 	root->Print(with_value);
 }

@@ -2,10 +2,10 @@
 #include "string"
 #include "list"
 
-// инициализация текущего узла
+// РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
 BaseMetricsTree* BaseMetricsTree::Cur = (BaseMetricsTree*)NULL;
 
-// отладочная печать
+// РѕС‚Р»Р°РґРѕС‡РЅР°СЏ РїРµС‡Р°С‚СЊ
 void BaseMetricsTree::Print(bool with_value)
 {
 	std::string value = "";
@@ -21,7 +21,7 @@ void BaseMetricsTree::Print(bool with_value)
 
 	std::cout << "\t---->\t";
 
-	// левый потомок
+	// Р»РµРІС‹Р№ РїРѕС‚РѕРјРѕРє
 	if (with_value && Left != NULL)
 		value = " (" + std::to_string(Left->n->max_deep) + ")";
 	else value = "";
@@ -31,7 +31,7 @@ void BaseMetricsTree::Print(bool with_value)
 
 	std::cout << "\t|\t";
 
-	// правый потомок
+	// РїСЂР°РІС‹Р№ РїРѕС‚РѕРјРѕРє
 	if (with_value && Right != NULL)
 		value = " (" + std::to_string(Right->n->max_deep) + ")";
 	else 
@@ -43,50 +43,50 @@ void BaseMetricsTree::Print(bool with_value)
 
 	std::cout << "\n";
 
-	// рекурсивный спуск по дереву
+	// СЂРµРєСѓСЂСЃРёРІРЅС‹Р№ СЃРїСѓСЃРє РїРѕ РґРµСЂРµРІСѓ
 
 	if (Left != NULL) Left->Print(with_value);
 	if (Right != NULL) Right->Print(with_value);
 
 }
 
-// конструктор класса со всеми параметрами
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° СЃРѕ РІСЃРµРјРё РїР°СЂР°РјРµС‚СЂР°РјРё
 BaseMetricsTree::BaseMetricsTree(BaseMetricsTree* l, BaseMetricsTree* r, BaseMetricsTree* u, Node* Data)
 {
 	n = new Node();
 
-	// инициализация ссылок и данных
+	// РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃСЃС‹Р»РѕРє Рё РґР°РЅРЅС‹С…
 	this->Left = l;
 	this->Right = r;
 	this->Up = u;
 	memcpy(n, Data, sizeof(Node));
 }
 
-// конструктор класса для корня дерева
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° РґР»СЏ РєРѕСЂРЅСЏ РґРµСЂРµРІР°
 BaseMetricsTree::BaseMetricsTree()
 {
 	this->n = new Node();
 	this->n->ident = "^root";
 
-	// инициализация ссылок
+	// РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃСЃС‹Р»РѕРє
 	this->Up = NULL;
 	this->Left = NULL;
 	this->Right = NULL;
 }
 
-// конструктор класса для любого другого узла с указанием идентификатора
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР° РґР»СЏ Р»СЋР±РѕРіРѕ РґСЂСѓРіРѕРіРѕ СѓР·Р»Р° СЃ СѓРєР°Р·Р°РЅРёРµРј РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°
 BaseMetricsTree::BaseMetricsTree(std::string ident)
 {
 	this->n = new Node();
 	this->n->ident = ident;
 
-	// инициализация ссылок
+	// РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃСЃС‹Р»РѕРє
 	this->Up = NULL;
 	this->Left = NULL;
 	this->Right = NULL;
 }
 
-// получить последнего соседа слева для текущего узла
+// РїРѕР»СѓС‡РёС‚СЊ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕСЃРµРґР° СЃР»РµРІР° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
 BaseMetricsTree* BaseMetricsTree::GetLastNeighbor()
 {
 	if (this == NULL)
@@ -94,15 +94,15 @@ BaseMetricsTree* BaseMetricsTree::GetLastNeighbor()
 
 	BaseMetricsTree* i = this;
 
-	// поиск "влево" по связям
+	// РїРѕРёСЃРє "РІР»РµРІРѕ" РїРѕ СЃРІСЏР·СЏРј
 	while ((i->Left != NULL) )
 		i = i->Left;
 
-	// вернуть ссылку на результат
+	// РІРµСЂРЅСѓС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° СЂРµР·СѓР»СЊС‚Р°С‚
 	return i;
 }
 
-// задать переданный узел, как дочерний узел справа для текущей вершины
+// Р·Р°РґР°С‚СЊ РїРµСЂРµРґР°РЅРЅС‹Р№ СѓР·РµР», РєР°Рє РґРѕС‡РµСЂРЅРёР№ СѓР·РµР» СЃРїСЂР°РІР° РґР»СЏ С‚РµРєСѓС‰РµР№ РІРµСЂС€РёРЅС‹
 void BaseMetricsTree::AddChieldForThisNode(BaseMetricsTree* chield)
 {
 
@@ -129,7 +129,7 @@ void BaseMetricsTree::AddChieldForThisNode(BaseMetricsTree* chield)
 	
 }
 
-// задать переданный узел, как сосед слева для текущей вершины
+// Р·Р°РґР°С‚СЊ РїРµСЂРµРґР°РЅРЅС‹Р№ СѓР·РµР», РєР°Рє СЃРѕСЃРµРґ СЃР»РµРІР° РґР»СЏ С‚РµРєСѓС‰РµР№ РІРµСЂС€РёРЅС‹
 BaseMetricsTree* BaseMetricsTree::AddNeighborForThisNode(BaseMetricsTree* neighbor)
 {
 	auto last = GetLastNeighbor();
@@ -148,33 +148,33 @@ BaseMetricsTree* BaseMetricsTree::AddNeighborForThisNode(BaseMetricsTree* neighb
 	return neighbor;
 }
 
-// получить ссылку на родильский узел от текущего
+// РїРѕР»СѓС‡РёС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° СЂРѕРґРёР»СЊСЃРєРёР№ СѓР·РµР» РѕС‚ С‚РµРєСѓС‰РµРіРѕ
 BaseMetricsTree* BaseMetricsTree::GetUp()
 {
 	return this->Up;
 }
 
-// вернуть ссылку на данные в узле
+// РІРµСЂРЅСѓС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° РґР°РЅРЅС‹Рµ РІ СѓР·Р»Рµ
 Node* BaseMetricsTree::GetData()
 {
 	return n;
 }
 
-// поиск данных от текущей вершины до корня
+// РїРѕРёСЃРє РґР°РЅРЅС‹С… РѕС‚ С‚РµРєСѓС‰РµР№ РІРµСЂС€РёРЅС‹ РґРѕ РєРѕСЂРЅСЏ
 BaseMetricsTree* BaseMetricsTree::FindUp(std::string ident)
 {
 	return FindUp(this, ident);
 }
 
-// поиск данных от заданной вершины до корня
+// РїРѕРёСЃРє РґР°РЅРЅС‹С… РѕС‚ Р·Р°РґР°РЅРЅРѕР№ РІРµСЂС€РёРЅС‹ РґРѕ РєРѕСЂРЅСЏ
 BaseMetricsTree* BaseMetricsTree::FindUp(BaseMetricsTree* From, std::string ident)
 {
 	BaseMetricsTree* i = From;
-	// поиск "вверх" по связям
+	// РїРѕРёСЃРє "РІРІРµСЂС…" РїРѕ СЃРІСЏР·СЏРј
 	while ((i != NULL) && (i->n->ident != ident))
 		i = i->Up;
 
-	// вернуть ссылку на результат
+	// РІРµСЂРЅСѓС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° СЂРµР·СѓР»СЊС‚Р°С‚
 	return i;
 }
 

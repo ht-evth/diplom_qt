@@ -11,7 +11,7 @@ class BlockScanner : public BaseScanner
 {
 
 public:
-	BlockScanner();							// конструктор класса
-	int Scan(std::string* lex) override;	// метод сканирования для классов
+	BlockScanner();							// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	int Scan(std::string* lex) override;	// РјРµС‚РѕРґ СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РґР»СЏ РєР»Р°СЃСЃРѕРІ
 };
 

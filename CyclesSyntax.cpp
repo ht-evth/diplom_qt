@@ -26,14 +26,14 @@ CyclesSyntax::CyclesSyntax(std::string text)
 	this->currentNode = root;
 }
 
-// синтаксический анализатор
+// СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·Р°С‚РѕСЂ
 QList<int> CyclesSyntax::Prog()
 {
     QList<int> temp;
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	
 	if (type_lex != TYPE_CLOSED_BRACE)
 	{
@@ -60,7 +60,7 @@ QList<int> CyclesSyntax::Prog()
 		// SE
 		if (type_lex == TYPE_FOR || type_lex == TYPE_DO || type_lex == TYPE_WHILE)
 		{
-			// отдельная проверка на do while
+			// РѕС‚РґРµР»СЊРЅР°СЏ РїСЂРѕРІРµСЂРєР° РЅР° do while
 
 			if (is_do_while)
 			{
@@ -69,28 +69,28 @@ QList<int> CyclesSyntax::Prog()
 			}
 
 			scaner->SetUk(uk1);
-			E();					// ветка E -> for(c*) | for(c*) { S } | while X | while X{ S } | do S while
+			E();					// РІРµС‚РєР° E -> for(c*) | for(c*) { S } | while X | while X{ S } | do S while
 		}
 
 		// SX
 		else if (type_lex == TYPE_OTHER)
 		{
 			scaner->SetUk(uk1);
-			X();					// ветка X -> Xd | d 
+			X();					// РІРµС‚РєР° X -> Xd | d 
 		}
 
 		// SD
 		else if (type_lex == TYPE_OPENED_BRACE)
 		{
 			scaner->SetUk(uk1);
-			D();					// ветка D -> { S } 
+			D();					// РІРµС‚РєР° D -> { S } 
 		}
 
-		// проверка на конец файла
+		// РїСЂРѕРІРµСЂРєР° РЅР° РєРѕРЅРµС† С„Р°Р№Р»Р°
 		else if (type_lex == TYPE_END)
 		{
-			//std::cout << "Дошли до конца модуля!" << std::endl;
-			scaner->SetUk(uk1); // на случай рекурсии
+			//std::cout << "Р”РѕС€Р»Рё РґРѕ РєРѕРЅС†Р° РјРѕРґСѓР»СЏ!" << std::endl;
+			scaner->SetUk(uk1); // РЅР° СЃР»СѓС‡Р°Р№ СЂРµРєСѓСЂСЃРёРё
 			break;
 		}
 		else
@@ -108,24 +108,24 @@ QList<int> CyclesSyntax::Prog()
 // E -> for(c*) | for(c*) { S } | while X | while X{ S } | do S while
 void CyclesSyntax::E()
 {
-	// указатель перед class
+	// СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ class
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 
-	// запоминаем текущий узел дерева (для возврата из вложенности)
+	// Р·Р°РїРѕРјРёРЅР°РµРј С‚РµРєСѓС‰РёР№ СѓР·РµР» РґРµСЂРµРІР° (РґР»СЏ РІРѕР·РІСЂР°С‚Р° РёР· РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё)
 	BaseMetricsTree* save_parent = this->currentNode;
-	std::string name = ""; // имя цикла для отладки
+	std::string name = ""; // РёРјСЏ С†РёРєР»Р° РґР»СЏ РѕС‚Р»Р°РґРєРё
 
-	// цикл for
+	// С†РёРєР» for
 	if (type_lex == TYPE_FOR)
 	{
-		// работа с деревом
+		// СЂР°Р±РѕС‚Р° СЃ РґРµСЂРµРІРѕРј
 		name = "for" + std::to_string(counter++);
 
 		type_lex = scaner->Scan(lex);
-		// после for открывается скобка, далее не важно что... 
+		// РїРѕСЃР»Рµ for РѕС‚РєСЂС‹РІР°РµС‚СЃСЏ СЃРєРѕР±РєР°, РґР°Р»РµРµ РЅРµ РІР°Р¶РЅРѕ С‡С‚Рѕ... 
 		if (*lex == "(")
 		{
 			while (*lex != ")")
@@ -133,11 +133,11 @@ void CyclesSyntax::E()
 				type_lex = scaner->Scan(lex);
 				if (type_lex == TYPE_END)
 				{
-                    //std::cout << "Ожидалась скобка ')' для оператора цикла for";
+                    //std::cout << "РћР¶РёРґР°Р»Р°СЃСЊ СЃРєРѕР±РєР° ')' РґР»СЏ РѕРїРµСЂР°С‚РѕСЂР° С†РёРєР»Р° for";
                     //exit(-1);
                     QMessageBox* pmbx =
-                                        new QMessageBox("Критическая ошибка!",
-                                        "Ожидалась скобка ')' для оператора цикла for",
+                                        new QMessageBox("РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°!",
+                                        "РћР¶РёРґР°Р»Р°СЃСЊ СЃРєРѕР±РєР° ')' РґР»СЏ РѕРїРµСЂР°С‚РѕСЂР° С†РёРєР»Р° for",
                                         QMessageBox::Critical,
                                         QMessageBox::Ok,
                                         0,
@@ -149,12 +149,12 @@ void CyclesSyntax::E()
 
 
 
-			// далее может быть {
+			// РґР°Р»РµРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ {
 			uk1 = scaner->GetUk();
 			type_lex = scaner->Scan(lex);
 
 
-			// тут можно ещё отслеживать однострочные циклы...
+			// С‚СѓС‚ РјРѕР¶РЅРѕ РµС‰С‘ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РѕРґРЅРѕСЃС‚СЂРѕС‡РЅС‹Рµ С†РёРєР»С‹...
 			if (type_lex == TYPE_OPENED_BRACE)
 			{
 				this->currentNode = new CyclesMetricsTree(name);
@@ -163,8 +163,8 @@ void CyclesSyntax::E()
 				if (save_parent->Up)
 					this->currentNode->n->is_inside = true;
 
-                //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
-				// вложенность
+                //std::cout << "\nРџРµСЂРµС…РѕРґРёРј РІ " << name << " (" << this->currentNode << ")";
+				// РІР»РѕР¶РµРЅРЅРѕСЃС‚СЊ
 
 				scaner->SetUk(uk1);
 				Prog();
@@ -185,18 +185,18 @@ void CyclesSyntax::E()
 	// while
 	else if (type_lex == TYPE_WHILE)
 	{
-		// работа с деревом
+		// СЂР°Р±РѕС‚Р° СЃ РґРµСЂРµРІРѕРј
 		name = "while" + std::to_string(counter++);
 		X();
 
-		// далее может быть {
+		// РґР°Р»РµРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ {
 		uk1 = scaner->GetUk();
 		type_lex = scaner->Scan(lex);
 
-		// тут можно ещё отслеживать однострочные циклы...
+		// С‚СѓС‚ РјРѕР¶РЅРѕ РµС‰С‘ РѕС‚СЃР»РµР¶РёРІР°С‚СЊ РѕРґРЅРѕСЃС‚СЂРѕС‡РЅС‹Рµ С†РёРєР»С‹...
 		if (type_lex == TYPE_OPENED_BRACE)
 		{
-			// вложенность
+			// РІР»РѕР¶РµРЅРЅРѕСЃС‚СЊ
 			
 			this->currentNode = new CyclesMetricsTree(name);
 			save_parent->AddChieldForThisNode(this->currentNode);
@@ -204,7 +204,7 @@ void CyclesSyntax::E()
 			if (save_parent->Up)
 				this->currentNode->n->is_inside = true;
 
-            //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
+            //std::cout << "\nРџРµСЂРµС…РѕРґРёРј РІ " << name << " (" << this->currentNode << ")";
 
 			Prog();
 		}
@@ -229,42 +229,42 @@ void CyclesSyntax::E()
 		if (save_parent->Up)
 			this->currentNode->n->is_inside = true;
 
-        //std::cout << "\nПереходим в " << name << " (" << this->currentNode << ")";
+        //std::cout << "\nРџРµСЂРµС…РѕРґРёРј РІ " << name << " (" << this->currentNode << ")";
 
 	
 		int uk2 = scaner->GetUk();
 		type_lex = scaner->Scan(lex);
 
-		// если не {
+		// РµСЃР»Рё РЅРµ {
 		if (type_lex != TYPE_OPENED_BRACE)
-			scaner->Scan(lex);	// восстановим указатель перед {
+			scaner->Scan(lex);	// РІРѕСЃСЃС‚Р°РЅРѕРІРёРј СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ {
 
 		Prog();
 
 
-		// ожидается while
+		// РѕР¶РёРґР°РµС‚СЃСЏ while
 		uk2 = scaner->GetUk();
 		type_lex = scaner->Scan(lex);
 		if (type_lex != TYPE_WHILE)
 		{
             QMessageBox* pmbx =
-                                new QMessageBox("Критическая ошибка!",
-                                "ожидается оператор while для do-while.",
+                                new QMessageBox("РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°!",
+                                "РѕР¶РёРґР°РµС‚СЃСЏ РѕРїРµСЂР°С‚РѕСЂ while РґР»СЏ do-while.",
                                 QMessageBox::Critical,
                                 QMessageBox::Ok,
                                 0,
                                 0);
             pmbx->exec();
             delete pmbx;
-            //std::cout << "ожидается оператор while для do-while.";
+            //std::cout << "РѕР¶РёРґР°РµС‚СЃСЏ РѕРїРµСЂР°С‚РѕСЂ while РґР»СЏ do-while.";
             exit(-1);
 		}
 
 	}
 
 
-	// восстанавливаем текущий узел - выход из вложенности
-    //std::cout << "\nВыходим из " << name << " возврат в (" << save_parent << ")";
+	// РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚РµРєСѓС‰РёР№ СѓР·РµР» - РІС‹С…РѕРґ РёР· РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
+    //std::cout << "\nР’С‹С…РѕРґРёРј РёР· " << name << " РІРѕР·РІСЂР°С‚ РІ (" << save_parent << ")";
 	this->currentNode = save_parent;
 
 }
@@ -273,12 +273,12 @@ void CyclesSyntax::E()
 // X -> Xd | d 
 void CyclesSyntax::X()
 {
-	// указатель перед лексемой
+	// СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ Р»РµРєСЃРµРјРѕР№
 
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	scaner->SetUk(uk1);
 
 	while (type_lex == TYPE_OTHER)
@@ -296,7 +296,7 @@ void CyclesSyntax::X()
 
 	}
 
-	// восстановим указатель перед лексемой, из-за которой вышли из цикла
+	// РІРѕСЃСЃС‚Р°РЅРѕРІРёРј СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ Р»РµРєСЃРµРјРѕР№, РёР·-Р·Р° РєРѕС‚РѕСЂРѕР№ РІС‹С€Р»Рё РёР· С†РёРєР»Р°
 	scaner->SetUk(uk1);
 
 }
@@ -305,10 +305,10 @@ void CyclesSyntax::X()
 // D -> { S } 
 void CyclesSyntax::D()
 {
-	// указатель перед {
+	// СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ {
 
 	Prog();
 
-	// указатель после }
+	// СѓРєР°Р·Р°С‚РµР»СЊ РїРѕСЃР»Рµ }
 
 }

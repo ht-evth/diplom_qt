@@ -12,6 +12,6 @@ public:
 	NameMetricsTree(NameMetricsTree* l, NameMetricsTree* r, NameMetricsTree* u, Node* Data);
 
     QList<int> CalculateMetrics() override;
-    void DFS(BaseMetricsTree* root, QList<int>* results) override;	// Обход дерева в глубину
+    void DFS(BaseMetricsTree* root, QList<int>* results) override;	// РћР±С…РѕРґ РґРµСЂРµРІР° РІ РіР»СѓР±РёРЅСѓ
 };
 

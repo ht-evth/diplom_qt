@@ -5,36 +5,36 @@
 class BaseMetricsTree
 {
 public:
-	Node* n;					// данные в узле дерева
-	BaseMetricsTree* Up;		// родитель
-	BaseMetricsTree* Left;		// левый потомок
-	BaseMetricsTree* Right;		// правый потомок
+	Node* n;					// РґР°РЅРЅС‹Рµ РІ СѓР·Р»Рµ РґРµСЂРµРІР°
+	BaseMetricsTree* Up;		// СЂРѕРґРёС‚РµР»СЊ
+	BaseMetricsTree* Left;		// Р»РµРІС‹Р№ РїРѕС‚РѕРјРѕРє
+	BaseMetricsTree* Right;		// РїСЂР°РІС‹Р№ РїРѕС‚РѕРјРѕРє
 
-	BaseMetricsTree* GetLastNeighbor();	// получить последнего соседа для текущего узла
+	BaseMetricsTree* GetLastNeighbor();	// РїРѕР»СѓС‡РёС‚СЊ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕСЃРµРґР° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
 	
 
 public:
-	static BaseMetricsTree* Cur;	// текущий узел
+	static BaseMetricsTree* Cur;	// С‚РµРєСѓС‰РёР№ СѓР·РµР»
 
-	BaseMetricsTree(BaseMetricsTree* l, BaseMetricsTree* r, BaseMetricsTree* u, Node* Data);	// конструктор класса
-	BaseMetricsTree(std::string ident);															// конструктор класса
-	BaseMetricsTree();																			// конструктор класса
+	BaseMetricsTree(BaseMetricsTree* l, BaseMetricsTree* r, BaseMetricsTree* u, Node* Data);	// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	BaseMetricsTree(std::string ident);															// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	BaseMetricsTree();																			// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
 
-	void Print(bool with_value = false);	// отладочная печать дерева
+	void Print(bool with_value = false);	// РѕС‚Р»Р°РґРѕС‡РЅР°СЏ РїРµС‡Р°С‚СЊ РґРµСЂРµРІР°
 
-	void AddChieldForThisNode(BaseMetricsTree* chield);					// создать соседа слева для текущего узла дерева
-	BaseMetricsTree* AddNeighborForThisNode(BaseMetricsTree* neighbor);	// создать потомка справа для текущего узла дерева
+	void AddChieldForThisNode(BaseMetricsTree* chield);					// СЃРѕР·РґР°С‚СЊ СЃРѕСЃРµРґР° СЃР»РµРІР° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° РґРµСЂРµРІР°
+	BaseMetricsTree* AddNeighborForThisNode(BaseMetricsTree* neighbor);	// СЃРѕР·РґР°С‚СЊ РїРѕС‚РѕРјРєР° СЃРїСЂР°РІР° РґР»СЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р° РґРµСЂРµРІР°
 
 	
-	BaseMetricsTree* GetUp();	// вернуть указатель на родителя текущего узла
-	Node* GetData();	// вернуть ссылку на данные в узле
-	BaseMetricsTree* FindUp(std::string ident); // поиск данных от текущей вершины до корня	
-	BaseMetricsTree* FindUp(BaseMetricsTree* From, std::string ident);	// поиск данных от заданной вершины до корня
+	BaseMetricsTree* GetUp();	// РІРµСЂРЅСѓС‚СЊ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЂРѕРґРёС‚РµР»СЏ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°
+	Node* GetData();	// РІРµСЂРЅСѓС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° РґР°РЅРЅС‹Рµ РІ СѓР·Р»Рµ
+	BaseMetricsTree* FindUp(std::string ident); // РїРѕРёСЃРє РґР°РЅРЅС‹С… РѕС‚ С‚РµРєСѓС‰РµР№ РІРµСЂС€РёРЅС‹ РґРѕ РєРѕСЂРЅСЏ	
+	BaseMetricsTree* FindUp(BaseMetricsTree* From, std::string ident);	// РїРѕРёСЃРє РґР°РЅРЅС‹С… РѕС‚ Р·Р°РґР°РЅРЅРѕР№ РІРµСЂС€РёРЅС‹ РґРѕ РєРѕСЂРЅСЏ
 
-    virtual QList<int> CalculateMetrics() = 0;				// вычислить метрики
-    virtual void DFS(BaseMetricsTree* root, QList<int>* results) = 0;	// Обход дерева в глубину
-	int CalcHeight(BaseMetricsTree* root);			// получить высоту поддерева
-	// int ....		// получить общее количество соседей в дереве
+    virtual QList<int> CalculateMetrics() = 0;				// РІС‹С‡РёСЃР»РёС‚СЊ РјРµС‚СЂРёРєРё
+    virtual void DFS(BaseMetricsTree* root, QList<int>* results) = 0;	// РћР±С…РѕРґ РґРµСЂРµРІР° РІ РіР»СѓР±РёРЅСѓ
+	int CalcHeight(BaseMetricsTree* root);			// РїРѕР»СѓС‡РёС‚СЊ РІС‹СЃРѕС‚Сѓ РїРѕРґРґРµСЂРµРІР°
+	// int ....		// РїРѕР»СѓС‡РёС‚СЊ РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕСЃРµРґРµР№ РІ РґРµСЂРµРІРµ
 
 };
 

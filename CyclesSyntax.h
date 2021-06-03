@@ -6,10 +6,10 @@ private:
 	bool is_do_while;
 	int counter = 0;
 public:
-	CyclesSyntax();								// конструктор класса
-	CyclesSyntax(std::string text);				// конструктор с текстом файла
+	CyclesSyntax();								// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	CyclesSyntax(std::string text);				// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ С‚РµРєСЃС‚РѕРј С„Р°Р№Р»Р°
 
-    QList<int> Prog() override;		// аксиома S -> SE | SX | eps
+    QList<int> Prog() override;		// Р°РєСЃРёРѕРјР° S -> SE | SX | eps
 
 	void E();					// E ->  for (c*) | for(c*) { S }	| while X | while X { S }	| do S while
 	void X();					// X -> Xd | d  
