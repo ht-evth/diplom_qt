@@ -84,6 +84,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableView->resizeColumnsToContents();
     UpdateTable(nullptr, nullptr);
 
+    ui->label_info->setText("<a href=\"whatever\">Справка</a>");
+    ui->label_info->setTextInteractionFlags(Qt::TextBrowserInteraction);
+
 }
 
 void MainWindow::SetColorForPairCells(QStandardItem* item_1,  QStandardItem* item_2, int value_1, int value_2)
@@ -292,3 +295,13 @@ void MainWindow::on_Button_Start_clicked()
     CalulateResult(metrics_1, metrics_2);
 
 }
+
+void MainWindow::on_label_info_linkActivated(const QString &link)
+{
+
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Цвета таблицы");
+    msgBox.setText("Обозначения цветов таблицы:\n\n • Красный - полное совпадение метрик;\n • Желтый - метрики совпадают более, чем на их среднее арифметическое. \n • Зелёный - метрики совпадают менее, чем на их среднее арифметическое;\n • Серый - метрики равны нулю.");
+    msgBox.exec();
+}
+

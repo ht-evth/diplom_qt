@@ -23,6 +23,8 @@ private slots:
 
     void on_Button_Start_clicked();
 
+    void on_label_info_linkActivated(const QString &link);
+
 private:
     Ui::MainWindow *ui;
     void UpdateTable(QList<int>* metrics_1, QList<int>* metrics_2);
