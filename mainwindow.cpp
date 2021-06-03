@@ -92,19 +92,28 @@ void MainWindow::SetColorForPairCells(QStandardItem* item_1,  QStandardItem* ite
     {
         if (value_1 == value_2)
         {
+            // красный
             item_1->setBackground(QColor(255, 0, 0, 127));
             item_2->setBackground(QColor(255, 0, 0, 127));
         }
         else if (abs(value_1 - value_2) > ((value_1 + value_2) / 2))
         {
+            // зелёный
             item_1->setBackground(QColor(0, 255, 127, 127));
             item_2->setBackground(QColor(0, 255, 127, 127));
         }
         else
         {
-            item_1->setBackground(QColor(255, 255, 153, 127));
-            item_2->setBackground(QColor(255, 255, 153, 127));
+            // желтый
+            item_1->setBackground(QColor(255, 255, 153, 255));
+            item_2->setBackground(QColor(255, 255, 153, 255));
         }
+    }
+    // серый
+    else
+    {
+        item_1->setBackground(QColor(230, 230, 230, 255));
+        item_2->setBackground(QColor(230, 230, 230, 255));
     }
 
     item_1->setTextAlignment(Qt::AlignCenter);
