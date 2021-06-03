@@ -10,31 +10,31 @@ BlockScanner::BlockScanner()
 }
 
 
-// определение сканера для блоков
+// РѕРїСЂРµРґРµР»РµРЅРёРµ СЃРєР°РЅРµСЂР° РґР»СЏ Р±Р»РѕРєРѕРІ
 int BlockScanner::Scan(std::string* lex)
 {
-	lex->clear();	// очистим лексему
+	lex->clear();	// РѕС‡РёСЃС‚РёРј Р»РµРєСЃРµРјСѓ
 	int i = 0;
 
-	SkipSymbols();	// пропускаем пробелы, табы, переносы строк и комментарии
+	SkipSymbols();	// РїСЂРѕРїСѓСЃРєР°РµРј РїСЂРѕР±РµР»С‹, С‚Р°Р±С‹, РїРµСЂРµРЅРѕСЃС‹ СЃС‚СЂРѕРє Рё РєРѕРјРјРµРЅС‚Р°СЂРёРё
 
-	// если конец модуля
+	// РµСЃР»Рё РєРѕРЅРµС† РјРѕРґСѓР»СЏ
 	if (text[uk] == '\0')
 	{
 		lex[0] = '\0';
-        //std::cout << "Конец!" << std::endl;
+        //std::cout << "РљРѕРЅРµС†!" << std::endl;
 		return TYPE_END;
 	}
 
-	// проверка на спецсимволы
+	// РїСЂРѕРІРµСЂРєР° РЅР° СЃРїРµС†СЃРёРјРІРѕР»С‹
 	else if (text[uk] == '{') { lex->insert(i++, 1, text[uk++]); return TYPE_OPENED_BRACE; }
 	else if (text[uk] == '}') { lex->insert(i++, 1, text[uk++]); return TYPE_CLOSED_BRACE; }
 
-	// что-то другое
+	// С‡С‚Рѕ-С‚Рѕ РґСЂСѓРіРѕРµ
 	else
 	{
 		lex->insert(i++, 1, text[uk++]);
-		//std::cout << "Что-то другое: " << *lex << std::endl;
+		//std::cout << "Р§С‚Рѕ-С‚Рѕ РґСЂСѓРіРѕРµ: " << *lex << std::endl;
 		return TYPE_OTHER;
 	}
 

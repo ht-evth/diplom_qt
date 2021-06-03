@@ -4,12 +4,12 @@
 
 class BaseSyntax {
 protected:
-    BaseScanner* scaner;        // сканнер
-    BaseMetricsTree* root;      // дерево
-    BaseMetricsTree* currentNode;   // текущий узел в дереве
+    BaseScanner* scaner;        // СЃРєР°РЅРЅРµСЂ
+    BaseMetricsTree* root;      // РґРµСЂРµРІРѕ
+    BaseMetricsTree* currentNode;   // С‚РµРєСѓС‰РёР№ СѓР·РµР» РІ РґРµСЂРµРІРµ
 
 public:
-    virtual QList<int> Prog() = 0;    // аксиома
+    virtual QList<int> Prog() = 0;    // Р°РєСЃРёРѕРјР°
 
     void PrintTree(bool with_value = false);
 };

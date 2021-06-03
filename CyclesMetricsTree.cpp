@@ -1,6 +1,6 @@
 #include "CyclesMetricsTree.h"
 
-// конструкторы классов вызывают базовый конструктор
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ РєР»Р°СЃСЃРѕРІ РІС‹Р·С‹РІР°СЋС‚ Р±Р°Р·РѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 CyclesMetricsTree::CyclesMetricsTree() : BaseMetricsTree() { }
 
 CyclesMetricsTree::CyclesMetricsTree(std::string name) : BaseMetricsTree(name) { }
@@ -8,19 +8,19 @@ CyclesMetricsTree::CyclesMetricsTree(std::string name) : BaseMetricsTree(name) {
 CyclesMetricsTree::CyclesMetricsTree(CyclesMetricsTree* l, CyclesMetricsTree* r, CyclesMetricsTree* u, Node* Data) : BaseMetricsTree(l, r, u, Data) { }
 
 
-// вычислить метрики
+// РІС‹С‡РёСЃР»РёС‚СЊ РјРµС‚СЂРёРєРё
 QList<int> CyclesMetricsTree::CalculateMetrics()
 {
         QList<int>* results = new QList<int>{ 0, 0, 0, 0, 0, 0 };
 
 	DFS(this, results);
 
-    //std::cout << "\n\nЦиклов: " << results->at(0);
-    //std::cout << "\nВложенных циклов: " << results->at(1);
-    //std::cout << "\nМакс. уровень вложенности циклов: " << results->at(2);
-    //std::cout << "\nОбщая длина: " << results->at(3);
-    //std::cout << "\nОператоров continue: " << results->at(4);
-    //std::cout << "\nОператоров break/return: " << results->at(5);
+    //std::cout << "\n\nР¦РёРєР»РѕРІ: " << results->at(0);
+    //std::cout << "\nР’Р»РѕР¶РµРЅРЅС‹С… С†РёРєР»РѕРІ: " << results->at(1);
+    //std::cout << "\nРњР°РєСЃ. СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё С†РёРєР»РѕРІ: " << results->at(2);
+    //std::cout << "\nРћР±С‰Р°СЏ РґР»РёРЅР°: " << results->at(3);
+    //std::cout << "\nРћРїРµСЂР°С‚РѕСЂРѕРІ continue: " << results->at(4);
+    //std::cout << "\nРћРїРµСЂР°С‚РѕСЂРѕРІ break/return: " << results->at(5);
 
     return *results;
 }
@@ -29,33 +29,33 @@ void CyclesMetricsTree::DFS(BaseMetricsTree* root, QList<int>* results)
 {
 	if (root)
 	{
-		// если мы не в корне дерева
+		// РµСЃР»Рё РјС‹ РЅРµ РІ РєРѕСЂРЅРµ РґРµСЂРµРІР°
 		if (root->Up)
 		{
-            results->replace(0, results->at(0) + 1); // кол-во циклов ++
+            results->replace(0, results->at(0) + 1); // РєРѕР»-РІРѕ С†РёРєР»РѕРІ ++
 
-			// если этот цикл вложенный, инкрементируем
+			// РµСЃР»Рё СЌС‚РѕС‚ С†РёРєР» РІР»РѕР¶РµРЅРЅС‹Р№, РёРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј
 			if (root->n->is_inside)
                 results->replace(1, results->at(1) + 1);
 
-			// если уровень макс уровень вложенности внутри этого класса, больше,
-			// чем запомненный ранее, обновляем значение
+			// РµСЃР»Рё СѓСЂРѕРІРµРЅСЊ РјР°РєСЃ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё РІРЅСѓС‚СЂРё СЌС‚РѕРіРѕ РєР»Р°СЃСЃР°, Р±РѕР»СЊС€Рµ,
+			// С‡РµРј Р·Р°РїРѕРјРЅРµРЅРЅС‹Р№ СЂР°РЅРµРµ, РѕР±РЅРѕРІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ
 			root->n->max_deep = CalcHeight(root->Right);
             if (root->n->max_deep > results->at(2))
                 results->replace(2, root->n->max_deep);
 
-            // суммируем длины
+            // СЃСѓРјРјРёСЂСѓРµРј РґР»РёРЅС‹
             results->replace(3, results->at(3) + root->n->length);
 
-			// суммируем continue
+			// СЃСѓРјРјРёСЂСѓРµРј continue
             results->replace(4, results->at(4) + root->n->_continue);
 
-			// суммируем break_return
+			// СЃСѓРјРјРёСЂСѓРµРј break_return
             results->replace(5, results->at(5) + root->n->break_return);
 
 		}
 
-		// перейти к потомкам
+		// РїРµСЂРµР№С‚Рё Рє РїРѕС‚РѕРјРєР°Рј
 		DFS(root->Left, results);
 		DFS(root->Right, results);
 	}

@@ -6,10 +6,10 @@ class BlockSyntax : public BaseSyntax
 private:
 	int counter = 0;
 public:
-	BlockSyntax();								// конструктор класса
-	BlockSyntax(std::string text);				// конструктор с текстом файла
+	BlockSyntax();								// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	BlockSyntax(std::string text);				// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ С‚РµРєСЃС‚РѕРј С„Р°Р№Р»Р°
 
-    QList<int> Prog() override;		// аксиома S -> SE | SX | eps
+    QList<int> Prog() override;		// Р°РєСЃРёРѕРјР° S -> SE | SX | eps
 
 	void E();					// E ->  { S }
 	void X();					// X -> Xd | d  

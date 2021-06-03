@@ -15,7 +15,7 @@ class CyclesScanner : public BaseScanner
 {
 
 public:
-	CyclesScanner();						// конструктор класса
-	int Scan(std::string* lex) override;	// метод сканирования для классов
+	CyclesScanner();						// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	int Scan(std::string* lex) override;	// РјРµС‚РѕРґ СЃРєР°РЅРёСЂРѕРІР°РЅРёСЏ РґР»СЏ РєР»Р°СЃСЃРѕРІ
 };
 

@@ -42,28 +42,28 @@ ClassScanner::ClassScanner()
 }
 
 
-// определение сканера для классов
+// РѕРїСЂРµРґРµР»РµРЅРёРµ СЃРєР°РЅРµСЂР° РґР»СЏ РєР»Р°СЃСЃРѕРІ
 int ClassScanner::Scan(std::string *lex)
 {
-	lex->clear();	// очистим лексему
+	lex->clear();	// РѕС‡РёСЃС‚РёРј Р»РµРєСЃРµРјСѓ
 	int i = 0;		
 
-	SkipSymbols();	// пропускаем пробелы, табы, переносы строк и комментарии
+	SkipSymbols();	// РїСЂРѕРїСѓСЃРєР°РµРј РїСЂРѕР±РµР»С‹, С‚Р°Р±С‹, РїРµСЂРµРЅРѕСЃС‹ СЃС‚СЂРѕРє Рё РєРѕРјРјРµРЅС‚Р°СЂРёРё
 
-	// если конец модуля
+	// РµСЃР»Рё РєРѕРЅРµС† РјРѕРґСѓР»СЏ
 	if (text[uk] == '\0')
 	{
 		lex[0] = '\0';
-		//std::cout << "\nКонец classscanner!" << std::endl;
+		//std::cout << "\nРљРѕРЅРµС† classscanner!" << std::endl;
 		return TYPE_END;
 	}
 
-	// иначе проверка на идентификатор
+	// РёРЅР°С‡Рµ РїСЂРѕРІРµСЂРєР° РЅР° РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
 	else if (((text[uk] >= 'a') && (text[uk] <= 'z')) || ((text[uk] >= 'A') && (text[uk] <= 'Z')) || (text[uk] == '_'))
 	{
 		lex->insert(i++, 1, text[uk++]);
 
-		// запоминаем символы, уместные для идентификаторов
+		// Р·Р°РїРѕРјРёРЅР°РµРј СЃРёРјРІРѕР»С‹, СѓРјРµСЃС‚РЅС‹Рµ РґР»СЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ
 		while (((text[uk] >= '0') && (text[uk] <= '9')) ||
 			((text[uk] >= 'a') && (text[uk] <= 'z')) ||
 			((text[uk] >= 'A') && (text[uk] <= 'Z')) ||
@@ -71,7 +71,7 @@ int ClassScanner::Scan(std::string *lex)
 				lex->insert(i++, 1, text[uk++]);
 
 
-		// после того, как считали, проверим на ключевое слово
+		// РїРѕСЃР»Рµ С‚РѕРіРѕ, РєР°Рє СЃС‡РёС‚Р°Р»Рё, РїСЂРѕРІРµСЂРёРј РЅР° РєР»СЋС‡РµРІРѕРµ СЃР»РѕРІРѕ
 		for (auto word : this->keywords)
 		{
 			if (word == *lex)
@@ -81,7 +81,7 @@ int ClassScanner::Scan(std::string *lex)
 			}
 		}
 
-		// проверка на тип данных
+		// РїСЂРѕРІРµСЂРєР° РЅР° С‚РёРї РґР°РЅРЅС‹С…
 		for (auto word : this->types)
 		{
 			if (word == *lex)
@@ -99,7 +99,7 @@ int ClassScanner::Scan(std::string *lex)
 		return TYPE_IDENT;
 	}
 
-	// проверка на спецсимволы
+	// РїСЂРѕРІРµСЂРєР° РЅР° СЃРїРµС†СЃРёРјРІРѕР»С‹
 	else if (text[uk] == '{') { lex->insert(i++, 1, text[uk++]); return TYPE_OPENED_BRACE; }
 	else if (text[uk] == '}') { lex->insert(i++, 1, text[uk++]); return TYPE_CLOSED_BRACE; }
 
@@ -116,11 +116,11 @@ int ClassScanner::Scan(std::string *lex)
 			return TYPE_KEYWORD;
 	}
 
-	// что-то другое
+	// С‡С‚Рѕ-С‚Рѕ РґСЂСѓРіРѕРµ
 	else
 	{
 		lex->insert(i++, 1, text[uk++]);
-		//std::cout << "Что-то другое: " << *lex << std::endl;
+		//std::cout << "Р§С‚Рѕ-С‚Рѕ РґСЂСѓРіРѕРµ: " << *lex << std::endl;
 		return TYPE_OTHER;
 	}
 

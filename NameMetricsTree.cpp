@@ -1,6 +1,6 @@
 #include "NameMetricsTree.h"
 
-// конструкторы классов вызывают базовый конструктор
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ РєР»Р°СЃСЃРѕРІ РІС‹Р·С‹РІР°СЋС‚ Р±Р°Р·РѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 NameMetricsTree::NameMetricsTree() : BaseMetricsTree() { }
 
 NameMetricsTree::NameMetricsTree(std::string name) : BaseMetricsTree(name) { }
@@ -10,17 +10,17 @@ NameMetricsTree::NameMetricsTree(NameMetricsTree* l, NameMetricsTree* r, NameMet
 
 
 
-// вычислить метрики
+// РІС‹С‡РёСЃР»РёС‚СЊ РјРµС‚СЂРёРєРё
 QList<int> NameMetricsTree::CalculateMetrics()
 {
     QList<int>* results = new QList<int>{ 0, 0, 0, 0 };
 
 	DFS(this, results);
 
-    //std::cout << "\n\nОбъявлено переменных: " << results->at(0);
-    //std::cout << "\nИспользуемых переменных: " << results->at(1);
-    //std::cout << "\nНеиспользуемых переменных: " << results->at(2);
-    //std::cout << "\nОбщее число использований переменных: " << results->at(3);
+    //std::cout << "\n\nРћР±СЉСЏРІР»РµРЅРѕ РїРµСЂРµРјРµРЅРЅС‹С…: " << results->at(0);
+    //std::cout << "\nРСЃРїРѕР»СЊР·СѓРµРјС‹С… РїРµСЂРµРјРµРЅРЅС‹С…: " << results->at(1);
+    //std::cout << "\nРќРµРёСЃРїРѕР»СЊР·СѓРµРјС‹С… РїРµСЂРµРјРµРЅРЅС‹С…: " << results->at(2);
+    //std::cout << "\nРћР±С‰РµРµ С‡РёСЃР»Рѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёР№ РїРµСЂРµРјРµРЅРЅС‹С…: " << results->at(3);
 
     return *results;
 }
@@ -29,14 +29,14 @@ void NameMetricsTree::DFS(BaseMetricsTree* root, QList<int>* results)
 {
 	if (root)
 	{
-		// если мы не в корне дерева
+		// РµСЃР»Рё РјС‹ РЅРµ РІ РєРѕСЂРЅРµ РґРµСЂРµРІР°
 		if (root->Up)
 		{
 			if (root->n->ident != "{block}" && root->n->ident != "{inside-block}")
 			{
-                results->replace(0, results->at(0) + 1); // кол-во переменных
+                results->replace(0, results->at(0) + 1); // РєРѕР»-РІРѕ РїРµСЂРµРјРµРЅРЅС‹С…
 
-				// считаем кол-во использованых переменных
+				// СЃС‡РёС‚Р°РµРј РєРѕР»-РІРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅС‹С… РїРµСЂРµРјРµРЅРЅС‹С…
 				if (root->n->number_of_uses > 0)
 				{
                     results->replace(1, results->at(1) + 1);
@@ -50,7 +50,7 @@ void NameMetricsTree::DFS(BaseMetricsTree* root, QList<int>* results)
 
 		}
 
-		// перейти к потомкам
+		// РїРµСЂРµР№С‚Рё Рє РїРѕС‚РѕРјРєР°Рј
 		DFS(root->Left, results);
 		DFS(root->Right, results);
 	}

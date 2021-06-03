@@ -25,14 +25,14 @@ NameSyntax::NameSyntax(std::string text)
 }
 
 
-// синтаксический анализатор
+// СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·Р°С‚РѕСЂ
 QList<int> NameSyntax::Prog()
 {
     QList<int> temp;
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();			// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();			// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	
 	if (type_lex != TYPE_CLOSED_BRACE)
 		scaner->SetUk(uk1);
@@ -51,7 +51,7 @@ QList<int> NameSyntax::Prog()
 		// SD
 		if (type_lex == TYPE_TYPE)
 		{
-			int uk_before_ident = scaner->GetUk();	// сохраним значение указателя до идентифактора
+			int uk_before_ident = scaner->GetUk();	// СЃРѕС…СЂР°РЅРёРј Р·РЅР°С‡РµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РґРѕ РёРґРµРЅС‚РёС„Р°РєС‚РѕСЂР°
             while (type_lex == TYPE_TYPE || type_lex == TYPE_POINTER || *lex == "[" || *lex == "]")
 			{
 				type_lex = scaner->Scan(lex);
@@ -59,11 +59,11 @@ QList<int> NameSyntax::Prog()
 					uk_before_ident = scaner->GetUk();
 			}
 
-			// ожидается идентификатор (SD)
+			// РѕР¶РёРґР°РµС‚СЃСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ (SD)
 			if (type_lex == TYPE_IDENT)
 			{
-				// после идентификатора ожидается ветка D
-				// восстановим указатель 
+				// РїРѕСЃР»Рµ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР° РѕР¶РёРґР°РµС‚СЃСЏ РІРµС‚РєР° D
+				// РІРѕСЃСЃС‚Р°РЅРѕРІРёРј СѓРєР°Р·Р°С‚РµР»СЊ 
 
 				int uk2 = scaner->GetUk();
 				scaner->Scan(lex);
@@ -72,7 +72,7 @@ QList<int> NameSyntax::Prog()
 				if (*lex != "(")
 				{
 					scaner->SetUk(uk_before_ident);
-					D();	// перейдём к ветке D -> t* id K;
+					D();	// РїРµСЂРµР№РґС‘Рј Рє РІРµС‚РєРµ D -> t* id K;
 				}
                 else
                 {
@@ -98,11 +98,11 @@ QList<int> NameSyntax::Prog()
 			X();
 		}
 
-		// проверка на конец файла
+		// РїСЂРѕРІРµСЂРєР° РЅР° РєРѕРЅРµС† С„Р°Р№Р»Р°
 		else if (type_lex == TYPE_END)
 		{
-			//std::cout << "Дошли до конца модуля!" << std::endl;
-			scaner->SetUk(uk1); // на случай рекурсии
+			//std::cout << "Р”РѕС€Р»Рё РґРѕ РєРѕРЅС†Р° РјРѕРґСѓР»СЏ!" << std::endl;
+			scaner->SetUk(uk1); // РЅР° СЃР»СѓС‡Р°Р№ СЂРµРєСѓСЂСЃРёРё
 			break;
 		}
 
@@ -118,56 +118,56 @@ QList<int> NameSyntax::Prog()
 
 void NameSyntax::E()
 {
-	// УКАЗАТЕЛЬ УЖЕ ПОСЛЕ {
+	// РЈРљРђР—РђРўР•Р›Р¬ РЈР–Р• РџРћРЎР›Р• {
 
-	// строим дерево с учетом вложенности
-	// создаём узел {}
+	// СЃС‚СЂРѕРёРј РґРµСЂРµРІРѕ СЃ СѓС‡РµС‚РѕРј РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
+	// СЃРѕР·РґР°С‘Рј СѓР·РµР» {}
 
 	NameMetricsTree* new_node = new NameMetricsTree("{block}");
 	this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
 
-	// создаём ещё один узел {vlozh} для реализации вложенности
-	// и переходим в него
+	// СЃРѕР·РґР°С‘Рј РµС‰С‘ РѕРґРёРЅ СѓР·РµР» {vlozh} РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
+	// Рё РїРµСЂРµС…РѕРґРёРј РІ РЅРµРіРѕ
 	NameMetricsTree* new_vlozh = new NameMetricsTree("{inside-block}");
 	this->currentNode->AddChieldForThisNode(new_vlozh);;
 	this->currentNode = new_vlozh;
 
 	Prog();
 
-	// вернуться на предыдущий уровень вложенности
-	// возвращаемся к узлу {}
+	// РІРµСЂРЅСѓС‚СЊСЃСЏ РЅР° РїСЂРµРґС‹РґСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
+	// РІРѕР·РІСЂР°С‰Р°РµРјСЃСЏ Рє СѓР·Р»Сѓ {}
 	this->currentNode = new_node;
 }
 
 
 void NameSyntax::D()
 {
-	// указатель уже перед ident 
+	// СѓРєР°Р·Р°С‚РµР»СЊ СѓР¶Рµ РїРµСЂРµРґ ident 
 
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	
-	// сейчас уже считан ident
+	// СЃРµР№С‡Р°СЃ СѓР¶Рµ СЃС‡РёС‚Р°РЅ ident
 	if (type_lex != TYPE_IDENT)
 	{
         QMessageBox* pmbx =
-                            new QMessageBox("Критическая ошибка!",
-                            "Ожидался идентификатор при объявлении переменной.",
+                            new QMessageBox("РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°!",
+                            "РћР¶РёРґР°Р»СЃСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРё РѕР±СЉСЏРІР»РµРЅРёРё РїРµСЂРµРјРµРЅРЅРѕР№.",
                             QMessageBox::Critical,
                             QMessageBox::Ok,
                             0,
                             0);
         pmbx->exec();
-        //std::cout << "Ожидался идентификатор при объявлении переменной.";
+        //std::cout << "РћР¶РёРґР°Р»СЃСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРё РѕР±СЉСЏРІР»РµРЅРёРё РїРµСЂРµРјРµРЅРЅРѕР№.";
         exit(-1);
 	}
 
 	NameMetricsTree* new_node = new NameMetricsTree(*lex);
 	this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
 
-	K();		// ветка K -> , id K | , p id  K | eps
+	K();		// РІРµС‚РєР° K -> , id K | , p id  K | eps
 
 	type_lex = scaner->Scan(lex);
 	if (type_lex != TYPE_SEMICOLON)
@@ -175,14 +175,14 @@ void NameSyntax::D()
 		if (*lex != ":" && *lex != "in")
 		{
             QMessageBox* pmbx =
-                                new QMessageBox("Критическая ошибка!",
-                                "Ожидалась точка с запятой при объявлении переменных.",
+                                new QMessageBox("РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°!",
+                                "РћР¶РёРґР°Р»Р°СЃСЊ С‚РѕС‡РєР° СЃ Р·Р°РїСЏС‚РѕР№ РїСЂРё РѕР±СЉСЏРІР»РµРЅРёРё РїРµСЂРµРјРµРЅРЅС‹С….",
                                 QMessageBox::Critical,
                                 QMessageBox::Ok,
                                 0,
                                 0);
             pmbx->exec();
-            //std::cout << "Ожидалась точка с запятой при объявлении переменных.";
+            //std::cout << "РћР¶РёРґР°Р»Р°СЃСЊ С‚РѕС‡РєР° СЃ Р·Р°РїСЏС‚РѕР№ РїСЂРё РѕР±СЉСЏРІР»РµРЅРёРё РїРµСЂРµРјРµРЅРЅС‹С….";
             exit(-1);
 		}
 	}
@@ -195,14 +195,14 @@ void NameSyntax::K()
 
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	scaner->SetUk(uk1);
 
 	if (*lex == ":" || *lex == "in")
 		return;
 
-	// ожидается запятая
+	// РѕР¶РёРґР°РµС‚СЃСЏ Р·Р°РїСЏС‚Р°СЏ
 
 	while (type_lex != TYPE_SEMICOLON && type_lex != TYPE_END)
 	{
@@ -215,23 +215,23 @@ void NameSyntax::K()
 		{
 			type_lex = scaner->Scan(lex);
 
-			// ожидается идентификатор
+			// РѕР¶РёРґР°РµС‚СЃСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
 			if (type_lex == TYPE_IDENT)
 			{
-				// новый узел дерева
+				// РЅРѕРІС‹Р№ СѓР·РµР» РґРµСЂРµРІР°
 				NameMetricsTree* new_node = new NameMetricsTree(*lex);
 				this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
 
 				continue;
 			}
 
-			// ожидается * идентификатор
+			// РѕР¶РёРґР°РµС‚СЃСЏ * РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
 			else if (type_lex == TYPE_POINTER)
 			{
 				type_lex = scaner->Scan(lex);
 				if (type_lex == TYPE_IDENT)
 				{
-					// новый узел дерева
+					// РЅРѕРІС‹Р№ СѓР·РµР» РґРµСЂРµРІР°
 					NameMetricsTree* new_node = new NameMetricsTree(*lex);
 					this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
 
@@ -240,7 +240,7 @@ void NameSyntax::K()
 			}
 		}
 
-		// если точка с запятой или конец файла
+		// РµСЃР»Рё С‚РѕС‡РєР° СЃ Р·Р°РїСЏС‚РѕР№ РёР»Рё РєРѕРЅРµС† С„Р°Р№Р»Р°
 		else if (type_lex == TYPE_END || type_lex == TYPE_SEMICOLON)
 		{
 			scaner->SetUk(uk1);
@@ -258,8 +258,8 @@ void NameSyntax::X()
 {
 	std::string* lex = new std::string();
 
-	int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-	int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+	int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+	int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
 	scaner->SetUk(uk1);
 
 	while (type_lex == TYPE_OTHER || type_lex == TYPE_IDENT || type_lex == TYPE_COMMA || type_lex == TYPE_SEMICOLON)
@@ -269,7 +269,7 @@ void NameSyntax::X()
 
 		if (type_lex == TYPE_IDENT)
 		{
-			// дерево ++ счетчик использования для lex
+			// РґРµСЂРµРІРѕ ++ СЃС‡РµС‚С‡РёРє РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РґР»СЏ lex
 			
 			BaseMetricsTree* v = this->currentNode->FindUp(*lex);
 
@@ -281,7 +281,7 @@ void NameSyntax::X()
 
 	}
 
-	// восстановим указатель перед лексемой, из-за которой вышли из цикла
+	// РІРѕСЃСЃС‚Р°РЅРѕРІРёРј СѓРєР°Р·Р°С‚РµР»СЊ РїРµСЂРµРґ Р»РµРєСЃРµРјРѕР№, РёР·-Р·Р° РєРѕС‚РѕСЂРѕР№ РІС‹С€Р»Рё РёР· С†РёРєР»Р°
 	scaner->SetUk(uk1);
 
 }
@@ -290,7 +290,7 @@ void NameSyntax::V()
 {
     //V -> (t * p id B) {
 
-    // указатель до (
+    // СѓРєР°Р·Р°С‚РµР»СЊ РґРѕ (
     std::string* lex = new std::string();
 
     int uk1 = scaner->GetUk();
@@ -317,11 +317,11 @@ void NameSyntax::B()
 
     std::string* lex = new std::string();
 
-    int uk1 = scaner->GetUk();		// переменная для хранения указателя в тексте программы
-    int type_lex = scaner->Scan(lex);	// переменная, хранящая текущий тип данных, считанный лексером
+    int uk1 = scaner->GetUk();		// РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СѓРєР°Р·Р°С‚РµР»СЏ РІ С‚РµРєСЃС‚Рµ РїСЂРѕРіСЂР°РјРјС‹
+    int type_lex = scaner->Scan(lex);	// РїРµСЂРµРјРµРЅРЅР°СЏ, С…СЂР°РЅСЏС‰Р°СЏ С‚РµРєСѓС‰РёР№ С‚РёРї РґР°РЅРЅС‹С…, СЃС‡РёС‚Р°РЅРЅС‹Р№ Р»РµРєСЃРµСЂРѕРј
     scaner->SetUk(uk1);
 
-    // ожидается запятая
+    // РѕР¶РёРґР°РµС‚СЃСЏ Р·Р°РїСЏС‚Р°СЏ
 
     while (*lex != ")" && type_lex != TYPE_END)
     {
@@ -341,10 +341,10 @@ void NameSyntax::B()
                 type_lex = scaner->Scan(lex);
             }
 
-            // ожидается идентификатор
+            // РѕР¶РёРґР°РµС‚СЃСЏ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ
             if (type_lex == TYPE_IDENT)
             {
-                // новый узел дерева
+                // РЅРѕРІС‹Р№ СѓР·РµР» РґРµСЂРµРІР°
                 NameMetricsTree* new_node = new NameMetricsTree(*lex);
                 this->currentNode = this->currentNode->AddNeighborForThisNode(new_node);
 
@@ -354,7 +354,7 @@ void NameSyntax::B()
 
         }
 
-        // если точка с запятой или конец файла
+        // РµСЃР»Рё С‚РѕС‡РєР° СЃ Р·Р°РїСЏС‚РѕР№ РёР»Рё РєРѕРЅРµС† С„Р°Р№Р»Р°
         else if (type_lex == TYPE_END || *lex == ")")
         {
             break;

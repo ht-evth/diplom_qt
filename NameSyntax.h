@@ -9,10 +9,10 @@ private:
 	std::list<int> keywords;
 
 public:
-	NameSyntax();								// конструктор класса
-	NameSyntax(std::string text);				// конструктор с текстом файла
+	NameSyntax();								// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	NameSyntax(std::string text);				// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ С‚РµРєСЃС‚РѕРј С„Р°Р№Р»Р°
 
-    QList<int> Prog() override;		// аксиома S -> SE | SX | S D |eps
+    QList<int> Prog() override;		// Р°РєСЃРёРѕРјР° S -> SE | SX | S D |eps
 
 	void E();					// E - > { S }
 	void D();					// D -> t* id K;

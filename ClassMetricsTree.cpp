@@ -1,7 +1,7 @@
 #include "ClassMetricsTree.h"
 #include <QList>
 
-// конструкторы классов вызывают базовый конструктор
+// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ РєР»Р°СЃСЃРѕРІ РІС‹Р·С‹РІР°СЋС‚ Р±Р°Р·РѕРІС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 ClassMetricsTree::ClassMetricsTree() : BaseMetricsTree() { }
 
 ClassMetricsTree::ClassMetricsTree(std::string name) : BaseMetricsTree(name) { }
@@ -9,7 +9,7 @@ ClassMetricsTree::ClassMetricsTree(std::string name) : BaseMetricsTree(name) { }
 ClassMetricsTree::ClassMetricsTree(ClassMetricsTree* l, ClassMetricsTree* r, ClassMetricsTree* u, Node* Data) : BaseMetricsTree(l, r, u, Data) { }
 
 
-// вычислить метрики (вызрв из root)
+// РІС‹С‡РёСЃР»РёС‚СЊ РјРµС‚СЂРёРєРё (РІС‹Р·СЂРІ РёР· root)
 QList<int> ClassMetricsTree::CalculateMetrics()
 {
     QList<int>* results = new QList<int>{ 0, 0, 0, 0, 0, 0 };
@@ -18,12 +18,12 @@ QList<int> ClassMetricsTree::CalculateMetrics()
 
 
 
-    //std::cout << "\n\nКлассов: " << results->at(0);
-    //std::cout << "\nВложенных классов: " << results->at(1);
-    //std::cout << "\nМакс. уровень вложенности классов: " << results->at(2);
-    //std::cout << "\nОбщая длина: " << results->at(3);
-    //std::cout << "\nВсего методов: " << results->at(4);
-    //std::cout << "\nВсего классов-потомков: " << results->at(5);
+    //std::cout << "\n\nРљР»Р°СЃСЃРѕРІ: " << results->at(0);
+    //std::cout << "\nР’Р»РѕР¶РµРЅРЅС‹С… РєР»Р°СЃСЃРѕРІ: " << results->at(1);
+    //std::cout << "\nРњР°РєСЃ. СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё РєР»Р°СЃСЃРѕРІ: " << results->at(2);
+    //std::cout << "\nРћР±С‰Р°СЏ РґР»РёРЅР°: " << results->at(3);
+    //std::cout << "\nР’СЃРµРіРѕ РјРµС‚РѕРґРѕРІ: " << results->at(4);
+    //std::cout << "\nР’СЃРµРіРѕ РєР»Р°СЃСЃРѕРІ-РїРѕС‚РѕРјРєРѕРІ: " << results->at(5);
 
     return *results;
 }
@@ -33,33 +33,33 @@ void ClassMetricsTree::DFS(BaseMetricsTree* root,  QList<int>* results)
 {
 	if (root)
 	{
-		// если мы не в корне дерева
+		// РµСЃР»Рё РјС‹ РЅРµ РІ РєРѕСЂРЅРµ РґРµСЂРµРІР°
 		if (root->Up)
 		{
-			// просмотреть текущий узел
+			// РїСЂРѕСЃРјРѕС‚СЂРµС‚СЊ С‚РµРєСѓС‰РёР№ СѓР·РµР»
 			
             results->replace(0, results->at(0) + 1);
 
-			// если этот класс вложенный, инкрементируем
+			// РµСЃР»Рё СЌС‚РѕС‚ РєР»Р°СЃСЃ РІР»РѕР¶РµРЅРЅС‹Р№, РёРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµРј
 			if (root->n->is_inside)
                 results->replace(1, results->at(1) + 1);
 
-			// если уровень макс уровень вложенности внутри этого класса, больше,
-			// чем запомненный ранее, обновляем значение
+			// РµСЃР»Рё СѓСЂРѕРІРµРЅСЊ РјР°РєСЃ СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё РІРЅСѓС‚СЂРё СЌС‚РѕРіРѕ РєР»Р°СЃСЃР°, Р±РѕР»СЊС€Рµ,
+			// С‡РµРј Р·Р°РїРѕРјРЅРµРЅРЅС‹Р№ СЂР°РЅРµРµ, РѕР±РЅРѕРІР»СЏРµРј Р·РЅР°С‡РµРЅРёРµ
 			root->n->max_deep = CalcHeight(root->Right);
             if (root->n->max_deep > results->at(2))
                 results->replace(2, root->n->max_deep);
 
             results->replace(3, results->at(3) + root->n->length);
 
-			// суммируем кол-во методов         
+			// СЃСѓРјРјРёСЂСѓРµРј РєРѕР»-РІРѕ РјРµС‚РѕРґРѕРІ         
              results->replace(4, results->at(4) + root->n->methods);
 
 			if (root->n->has_parent)
                  results->replace(5, results->at(5) + 1);
 		}
 
-		// перейти к потомкам
+		// РїРµСЂРµР№С‚Рё Рє РїРѕС‚РѕРјРєР°Рј
 		DFS(root->Left, results);
 		DFS(root->Right, results);
 	}
