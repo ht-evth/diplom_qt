@@ -63,6 +63,9 @@ int CyclesScanner::Scan(std::string* lex)
     else if (text[uk] == '\'')
     {
         uk++;
+
+        if (text[uk] == '\\' && text[uk + 1] == '\'')
+            uk += 2;
         while ((text[uk] != '\'') && (text[uk] != '\0' && (text[uk] != '\n')))
         {
             lex->insert(i++, 1, text[uk++]);
