@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableView->resizeColumnsToContents();
     UpdateTable(nullptr, nullptr);
 
-    ui->label_info->setText("<a href=\"whatever\">Справка</a>");
+    ui->label_info->setText("<a href=\"whatever\">Справка по цветам таблицы</a>");
     ui->label_info->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
 }
